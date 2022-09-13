@@ -1,20 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import vender from './screens/vender/index';
+import crud_categorias from './screens/crud_categorias/index';
+import crud_produtos from './screens/crud_produtos/index';
+import list_vendas from './screens/list_vendas/index';
+
+const Routes = createAppContainer(
+  createSwitchNavigator({
+    vender,
+    crud_categorias,
+    crud_produtos,
+    list_vendas,
+  })
+);
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Routes/>      
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
