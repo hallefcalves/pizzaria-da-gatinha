@@ -1,34 +1,59 @@
 import * as SQLite from 'expo-sqlite';
 
 
-export function getDbConnectVen() {
-    const ven = SQLite.openDatabase('dbContatos.db');
+export function getDbConnection() {
+    const ven = SQLite.openDatabase('dbPizzaria.db');
     return ven;
 }
 
-export function getDbConnectPro() {
-    const pro = SQLite.openDatabase('dbContatos.db');
-    return ;
-}
-
-export function getDbConnectCat() {
-    const cat = SQLite.openDatabase('dbContatos.db');
-    return ;
-}
 
 export async function createTable() {
     return new Promise((resolve, reject) => {
-        const query = `CREATE TABLE IF NOT EXISTS tbContatos
+        const queryPro = `CREATE TABLE IF NOT EXISTS tbProdutos
         (
-            id text not null primary key,
-            nome text not null,
-            telefone text not null          
+            codigo text not null primary key,
+            descricao text not null,
+            preco text not null,      
+            codigoCat text not null    
+        )`;
+        const queryVen = `CREATE TABLE IF NOT EXISTS tbVendas
+        (
+            codigo text not null primary key,
+            produtos text not null,
+            date text not null          
+        )`;
+        const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
+        (
+            codigo text not null primary key,
+            categoria text not null,          
         )`;
 
         let dbCx = getDbConnection();
         dbCx.transaction(tx => {
             tx.executeSql(
-                query, [],
+                queryPro, [],
+                (tx, resultado) => resolve(true)
+            )
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+        dbCx.transaction(tx => {
+            tx.executeSql(
+                queryVen, [],
+                (tx, resultado) => resolve(true)
+            )
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+        dbCx.transaction(tx => {
+            tx.executeSql(
+                queryCat, [],
                 (tx, resultado) => resolve(true)
             )
         },
@@ -43,120 +68,3 @@ export async function createTable() {
 
 
 
-export function obtemTodosContatos() {
-
-    return new Promise((resolve, reject) => {
-
-        let dbCx = getDbConnection();
-        dbCx.transaction(tx => {
-            let query = 'select * from tbContatos';
-            tx.executeSql(query, [],
-                (tx, registros) => {
-
-                    var retorno = []
-
-                    for (let n = 0; n < registros.rows.length; n++) {
-                        let obj = {
-                            id: registros.rows.item(n).id,
-                            nome: registros.rows.item(n).nome,
-                            telefone: registros.rows.item(n).telefone
-                        }
-                        retorno.push(obj);
-                    }
-                    resolve(retorno);
-                })
-        },
-            error => {
-                console.log(error);
-                resolve([]);
-            }
-        )
-    }
-    );
-}
-
-export function adicionaContato(contato) {
-
-    return new Promise((resolve, reject) => {
-        let query = 'insert into tbContatos (id, nome ,telefone) values (?,?,?)';
-        let dbCx = getDbConnection();
-
-        dbCx.transaction(tx => {
-            tx.executeSql(query, [contato.id, contato.nome, contato.telefone],
-                (tx, resultado) => {
-                    resolve(resultado.rowsAffected > 0);
-                })
-        },
-            error => {
-                console.log(error);
-                resolve(false);
-            }
-        )
-    }
-    );
-}
-
-
-export function alteraContato(contato) {
-    console.log('começando o método alteraContato');
-    return new Promise((resolve, reject) => {
-        let query = 'update tbContatos set nome=?, telefone=? where id=?';
-        let dbCx = getDbConnection();
-
-        dbCx.transaction(tx => {
-            tx.executeSql(query, [contato.nome, contato.telefone, contato.id],
-                (tx, resultado) => {
-                    resolve(resultado.rowsAffected > 0);
-                })
-        },
-            error => {
-                console.log(error);
-                resolve(false);
-            }
-        )
-    }
-    );
-}
-
-
-
-export function excluiContato(id) {
-    console.log('Apagando contato ' + id);
-    return new Promise((resolve, reject) => {
-        let query = 'delete from tbContatos where id=?';
-        let dbCx = getDbConnection();
-
-        dbCx.transaction(tx => {
-            tx.executeSql(query, [id],
-                (tx, resultado) => {
-                    resolve(resultado.rowsAffected > 0);
-                })
-        },
-            error => {
-                console.log(error);
-                resolve(false);
-            }
-        )
-    }
-    );
-}
-
-
-export function excluiTodosContatos() {
-    console.log("Apagando todos os contatos...");
-    return new Promise((resolve, reject) => {
-        let query = 'delete from tbContatos';
-        let dbCx = getDbConnection();
-        dbCx.transaction(tx => {
-            tx.executeSql(query, [],
-                (tx, resultado) => resolve(resultado.rowsAffected > 0)
-            );
-        },
-            error => {
-                console.log(error);
-                resolve(false);
-            }
-        );
-    }
-    );
-}
