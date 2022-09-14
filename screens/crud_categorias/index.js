@@ -8,7 +8,7 @@ export default function Tela1({ navigation }) {
 
             <Text>Tela 1</Text>
             <TouchableOpacity style={styles.botaoVoltar}
-                onPress={() => navigation.navigate('Home')}>
+                onPress={() => navigation.navigate('menu')}>
                 <Text>Voltar</Text>
             </TouchableOpacity>
 
