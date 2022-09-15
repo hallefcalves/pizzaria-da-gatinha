@@ -70,20 +70,7 @@ export default function Tela1({ navigation }) {
 
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
 
-       <TouchableOpacity
-            style={styles.botaoPequeno}
-            onPress={() => navigation.navigate("menu")}
-          >
-            <Text style={styles.labelBnt}>Voltar</Text>
-          </TouchableOpacity>
-
-      <ScrollView contentContainerStyle = {{flexGrow:1}}>
-
-
-          <View style={styles.areaBotoes}>
-=======
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <TouchableOpacity
           style={styles.botaoPequeno}
@@ -93,7 +80,6 @@ export default function Tela1({ navigation }) {
         </TouchableOpacity>
 
         <View style={styles.areaBotoes}>
->>>>>>> fb857c69656d8a8742f8a592c2a7e827aeefce69
           <Text style={styles.title}>Nova Pizza</Text>
 
           <Image style={styles.imagem} source={IconeGatinho} />
