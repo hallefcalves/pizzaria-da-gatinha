@@ -1,4 +1,5 @@
 import * as SQLite from "expo-sqlite";
+import { getDbConnection } from "./dbservice";
 
 export function obtemTodosprodutos() {
   return new Promise((resolve, reject) => {
@@ -92,7 +93,6 @@ export function adicionaProduto(produto) {
     let query =
       "insert into tbProdutos (codigo, descricao, preco, codigoCat) values (?,?,?,?)";
     let dbCx = getDbConnection();
-
     dbCx.transaction(
       (tx) => {
         tx.executeSql(
@@ -111,8 +111,8 @@ export function adicionaProduto(produto) {
   });
 }
 
-export function alteraproduto(produto) {
-  console.log("começando o método alteraproduto");
+export function alteraProduto(produto) {
+  console.log("começando o método alteraProduto");
   return new Promise((resolve, reject) => {
     let query =
       "update tbProdutos set descricao=?, preco=?, codigoCat=? where codigo=?";
@@ -136,7 +136,7 @@ export function alteraproduto(produto) {
   });
 }
 
-export function excluiproduto(codigo) {
+export function excluiProduto(codigo) {
   console.log("Apagando produto " + codigo);
   return new Promise((resolve, reject) => {
     let query = "delete from tbProdutos where codigo=?";
@@ -156,7 +156,7 @@ export function excluiproduto(codigo) {
   });
 }
 
-export function excluiTodosprodutos() {
+export function excluiTodosProdutos() {
   console.log("Apagando todos os produtos...");
   return new Promise((resolve, reject) => {
     let query = "delete from tbProdutos";

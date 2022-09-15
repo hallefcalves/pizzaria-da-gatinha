@@ -1,7 +1,8 @@
 import { react } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import styles from "./styles";
+import createTable from "../../services/dbservice";
 
 export default function Tela1({ navigation }) {
   let tabelasCriadas = false;
@@ -14,7 +15,6 @@ export default function Tela1({ navigation }) {
     }
 
     console.log("UseEffect...");
-    await carregaDados();
   }
 
   useEffect(() => {

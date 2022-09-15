@@ -10,6 +10,7 @@ import {
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState } from "react";
+import { adicionaProduto, alteraProduto } from "../../services/dbpro";
 
 export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState("");
@@ -21,10 +22,56 @@ export default function Tela1({ navigation }) {
     { label: "Pizza Salgada", value: "Pizza Salgada" },
     { label: "Pizza Doce", value: "Pizza Doce" },
   ]);
+  function createUniqueId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
+  }
+  async function limparCampos() {
+    setDescricao("");
+    setPreco("");
+    setCodigo("");
+    setItems();
+    Keyboard.dismiss();
+  }
+  
+  async function salvaDados() {
+    let novoRegistro = codigo == undefined;
+
+    let obj = {
+      codigo: novoRegistro? createUniqueId() : codigo,
+      descricao: descricao,
+      preco: preco,
+      codigoCat: codigoCat
+    };
+
+    console.log(obj.codigo)
+    try {
+
+      if (novoRegistro) {
+        let resposta = (await adicionaProduto(obj));
+
+        if (resposta)
+          Alert.alert('adicionado com sucesso!');
+        else
+          Alert.alert('Falhou miseravelmente!');
+      }
+      else {      
+        let resposta = await alteraProduto(obj);
+        if (resposta)
+          Alert.alert('Alterado com sucesso!');
+        else
+          Alert.alert('Falhou miseravelmente!');
+      }
+      
+      Keyboard.dismiss();
+      limparCampos();
+      await carregaDados();
+    } catch (e) {
+      Alert.alert(e);
+    }
+  }
 
   return (
     <View style={styles.container}>
-        
       <Text style={styles.label}>Voltar</Text>
       <TouchableOpacity
         style={styles.botaoPequeno}
@@ -62,6 +109,12 @@ export default function Tela1({ navigation }) {
         setValue={setValue}
         setItems={setItems}
       />
+      <TouchableOpacity
+        style={styles.botaoPequeno}
+        onPress={() => salvaDados()}
+      >
+        <Text>Adicionar Produto</Text>
+      </TouchableOpacity>
     </View>
   );
 }

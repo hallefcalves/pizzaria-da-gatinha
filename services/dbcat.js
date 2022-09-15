@@ -1,4 +1,6 @@
 import * as SQLite from "expo-sqlite";
+import getDbConnection from "./dbservice";
+
 
 export function obtemTodasCategorias() {
   return new Promise((resolve, reject) => {

@@ -2,19 +2,19 @@ import * as SQLite from 'expo-sqlite';
 
 
 export function getDbConnection() {
-    const ven = SQLite.openDatabase('dbPizzaria.db');
-    return ven;
+    const cx = SQLite.openDatabase('dbPizzaria.db');
+    return cx;
 }
 
 
-export async function createTable() {
+export default async function createTable() {
     return new Promise((resolve, reject) => {
         const queryPro = `CREATE TABLE IF NOT EXISTS tbProdutos
         (
             codigo text not null primary key,
             descricao text not null,
             preco text not null,      
-            codigoCat text not null    
+            codigoCat text not null     
         )`;
         const queryVen = `CREATE TABLE IF NOT EXISTS tbVendas
         (
@@ -24,8 +24,8 @@ export async function createTable() {
         )`;
         const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
         (
-            codigo text not null primary key,
-            categoria text not null,          
+           "codigo text not null primary key,"
+            "categoria text not null"       
         )`;
 
         let dbCx = getDbConnection();
