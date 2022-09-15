@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     justifyContent: "center",
-    height:950
+    height: 650
   },
 
   label: {
@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
   },
 
   botaoGrande: {
-    marginTop: 10,
+    marginTop: 30,
     marginBottom: 10,
-    width: 100,
+    width: 170,
     height: 60,
     backgroundColor: "#d6a6b0",
     borderRadius: 10,
@@ -93,10 +93,13 @@ const styles = StyleSheet.create({
 
   imagem: {
     width: "56%",
-    height: "24%",
+    height: "36%",
   },
 
-
+  imageicon: {
+    width: "17%",
+    height: "90%",
+  },
 });
 
 export default styles;

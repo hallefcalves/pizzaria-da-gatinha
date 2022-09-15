@@ -27,14 +27,16 @@ export default function Tela1({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle = {{flexGrow:1}}>
 
-          <TouchableOpacity
+       <TouchableOpacity
             style={styles.botaoPequeno}
             onPress={() => navigation.navigate("menu")}
           >
             <Text style={styles.labelBnt}>Voltar</Text>
           </TouchableOpacity>
+
+      <ScrollView contentContainerStyle = {{flexGrow:1}}>
+
 
           <View style={styles.areaBotoes}>
           <Text style={styles.title}>Nova Pizza</Text>
