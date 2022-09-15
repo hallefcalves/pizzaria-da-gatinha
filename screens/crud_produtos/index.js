@@ -11,7 +11,7 @@ import IconeGatinho from "../../assets/img/chef-cat-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Tela1({ navigation }) {
-  const [codigo, setCodigo] = useState();
+  const [codigo, setCodigo] = useState(undefined);
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
   const [codigoCat, setCodigoCat] = useState("")
@@ -27,8 +27,6 @@ export default function Tela1({ navigation }) {
   async function limparCampos() {
     setDescricao("");
     setPreco("");
-    setCodigo("");
-    setItems();
     Keyboard.dismiss();
   }
 
@@ -39,9 +37,10 @@ export default function Tela1({ navigation }) {
       codigo: novoRegistro ? createUniqueId() : codigo,
       descricao: descricao,
       preco: preco,
-      codigoCat: items.values,
+      codigoCat: codigoCat
     };
 
+    console.log(obj.codigoCat)
 
     console.log(obj.codigo);
     try {
@@ -49,20 +48,19 @@ export default function Tela1({ navigation }) {
         let resposta = await adicionaProduto(obj);
 
         if (resposta) 
-            Alert.alert("adicionado com sucesso!");
+            Alert.alert("Alerta","adicionado com sucesso!",["Ok", "Cancel"]);
         else 
-            Alert.alert("Falhou miseravelmente!");
+            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]); 
       } else {
         let resposta = await alteraProduto(obj);
         if (resposta) 
-            Alert.alert("Alterado com sucesso!");
+            Alert.alert("Alerta","Alterado com sucesso!",["Ok", "Cancel"]);
         else 
-            Alert.alert("Falhou miseravelmente!");
+            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]);
       }
 
       Keyboard.dismiss();
       limparCampos();
-      await carregaDados();
     } catch (e) {
       Alert.alert(e);
     }
@@ -99,11 +97,12 @@ export default function Tela1({ navigation }) {
           />
           <Text style={styles.label}>Categoria</Text>
           <DropDownPicker
+            listMode="SCROLLVIEW"
             style={styles.caixadropdown}
             open={open}
             value={value}
             items={items}
-            onChangeSearchText={(texto)=>setCodigoCat(texto)}
+            onChangeValue={(texto)=>setCodigoCat(texto)}
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
