@@ -1,8 +1,18 @@
 import { react } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import {
+  Text,
+  Touchable,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { useState, useEffect } from "react";
 import styles from "./styles";
 import createTable from "../../services/dbservice";
+import IconeGatinho from '../../assets/img/pizza-cat2-modified.png';
+
+
 
 export default function Tela1({ navigation }) {
   let tabelasCriadas = false;
@@ -23,31 +33,33 @@ export default function Tela1({ navigation }) {
   }, []);
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Tela 1</Text>
-      <TouchableOpacity
-        style={styles.botaoVoltar}
-        onPress={() => navigation.navigate("menu")}
-      >
-        <Text>Voltar</Text>
+
+      <Text style={styles.title}>Pizzaria da Gatinha</Text>
+      <Text style={styles.label}>Tem a massa mais macia</Text>
+
+      <Image
+          style={styles.imagem}
+          source={IconeGatinho} />
+              
+
+      <TouchableOpacity onPress={() => navigation.navigate("crud_produtos")}
+      style={styles.botaoGrande}>
+        <Text style={styles.labelBnt}>Nova Pizza</Text>
       </TouchableOpacity>
 
-      <Text>Pizzaria da Gatinha</Text>
-      <Text>Tem a massa mais quetinha</Text>
-
-      <TouchableOpacity onPress={() => navigation.navigate("crud_produtos")}>
-        <Text>Nova Pizza</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("vender")}
+      style={styles.botaoGrande}>
+        <Text style={styles.labelBnt}>Comprar Pizza</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("vender")}>
-        <Text>Comprar Pizza</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("list_vendas")}
+      style={styles.botaoGrande}>
+        <Text style={styles.labelBnt}>Vendas</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("list_vendas")}>
-        <Text>Vendas</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate("crud_categorias")}>
-        <Text>Nova Categoria</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("crud_categorias")}
+      style={styles.botaoGrande}>
+        <Text style={styles.labelBnt}>Nova Categoria</Text>
       </TouchableOpacity>
     </View>
   );

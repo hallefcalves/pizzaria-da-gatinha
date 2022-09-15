@@ -1,48 +1,103 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#74acb5",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-    contato: {
-        backgroundColor: '#ed8f1c',
-        flexDirection: 'row',
-        height: 80,
-        alignItems: 'center',
-        margin: 10,
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
-    },
-    listaNome: {
-        width: '50%',
-        fontSize: 18,
-        paddingRight: 10,
-    },
+  areaBotoes: {
+    marginTop: 10,
+    width: "100%",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    justifyContent: "center",
+    height:950
+  },
 
-    dadosListaTelefone: {
-        width: '40%',
-        flexDirection: 'row',
-    },
-    dadosBotoesAcao: {
-        width: '10%',
-    },
-    iconTelefone: {
-        width: 20,
-        height: 25,
-        marginRight: 5,
-    },
-    listaTelefone: {
-        color: "#FFF",
-        fontSize: 18,
-    },
+  label: {
+    marginBottom: 30,
+    fontSize: 15,
+    color: "#ffff",
+  },
+
+  labelBnt: {
+    fontSize: 15,
+    color: "#ffff",
+  },
+
+  title: {
+    fontSize: 20,
+    color: "#ffff",
+  },
+
+  caixaTexto: {
+    marginTop: 10,
+    backgroundColor: "#92c8d1",
+    borderRadius: 5,
+    borderColor: "#ffff",
+    width: 250,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    fontSize: 20,
+  },
+
+  caixadropdown: {
+    marginTop: 10,
+    backgroundColor: "#92c8d1",
+    borderColor: "#ffff",
+    width: '100%',
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    fontSize: 20,
+  },
+
+
+  botaoPequeno: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: 50,
+    height: 50,
+    backgroundColor: "#d6a6b0",
+    borderRadius: 10,
+    borderColor: "#ffff",
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  botaoGrande: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: 150,
+    height: 60,
+    backgroundColor: "#d6a6b0",
+    borderRadius: 10,
+    borderColor: "#ffff",
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  legendaCaixaTexto: {
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 5,
+    color: "#ffff",
+  },
+
+  imagem: {
+    width: "56%",
+    height: "34%",
+  },
 
 
 });
-
 
 export default styles;
