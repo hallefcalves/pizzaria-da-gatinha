@@ -1,48 +1,86 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fac282",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-    contato: {
-        backgroundColor: '#ed8f1c',
-        flexDirection: 'row',
-        height: 80,
-        alignItems: 'center',
-        margin: 10,
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        elevation: 3,
-    },
-    listaNome: {
-        width: '50%',
-        fontSize: 18,
-        paddingRight: 10,
-    },
+  label: {
+    fontSize: 30,
+    color: "#ffff",
+  },
 
-    dadosListaTelefone: {
-        width: '40%',
-        flexDirection: 'row',
-    },
-    dadosBotoesAcao: {
-        width: '10%',
-    },
-    iconTelefone: {
-        width: 20,
-        height: 25,
-        marginRight: 5,
-    },
-    listaTelefone: {
-        color: "#FFF",
-        fontSize: 18,
-    },
+  caixaTexto: {
+    borderRadius: 5,
+    borderColor: "#ffff",
+    borderWidth: 4,
+    width: 250,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    fontSize: 20,
+  },
 
+  caixaSenha: {
+    borderRadius: 5,
+    borderColor: "#ffff",
+    borderWidth: 4,
+    width: "40%",
+    height: 60,
+    fontSize: 20,
+    justifyContent: "space-evenly",
+    textAlign: "center",
+  },
 
+  botaoPequeno: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: 50,
+    height: 50,
+    backgroundColor: "#60bd90",
+    borderRadius: 10,
+    borderColor: "#ffff",
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  botaoGrande: {
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    width: 100,
+    height: 60,
+    backgroundColor: "#60bd90",
+    borderRadius: 10,
+    borderColor: "#ffff",
+    borderWidth: 3,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  legendaCaixaTexto: {
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 5,
+    color: "#ffff",
+  },
+
+  imagem: {
+    width: "17%",
+    height: "10%",
+  },
+
+  areaBotoes: {
+    marginTop: 20,
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-evenly",
+  },
 });
-
 
 export default styles;
