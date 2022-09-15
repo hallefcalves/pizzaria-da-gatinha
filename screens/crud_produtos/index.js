@@ -1,24 +1,20 @@
 import { react } from "react";
 import {
-  Text,
-  Touchable,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
+    Alert, Text, TextInput, TouchableOpacity,
+    View, Keyboard, Image
 } from "react-native";
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState } from "react";
 import { adicionaProduto, alteraProduto } from "../../services/dbpro";
-import IconeGatinho from '../../assets/img/chef-cat-modified.png';
-import { ScrollView } from 'react-native-gesture-handler';
-
-
+import IconeGatinho from "../../assets/img/chef-cat-modified.png";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Tela1({ navigation }) {
+  const [codigo, setCodigo] = useState();
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [codigoCat, setCodigoCat] = useState("")
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
@@ -35,36 +31,35 @@ export default function Tela1({ navigation }) {
     setItems();
     Keyboard.dismiss();
   }
-  
+
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
 
     let obj = {
-      codigo: novoRegistro? createUniqueId() : codigo,
+      codigo: novoRegistro ? createUniqueId() : codigo,
       descricao: descricao,
       preco: preco,
-      codigoCat: codigoCat
+      codigoCat: items.values,
     };
 
-    console.log(obj.codigo)
+
+    console.log(obj.codigo);
     try {
-
       if (novoRegistro) {
-        let resposta = (await adicionaProduto(obj));
+        let resposta = await adicionaProduto(obj);
 
-        if (resposta)
-          Alert.alert('adicionado com sucesso!');
-        else
-          Alert.alert('Falhou miseravelmente!');
-      }
-      else {      
+        if (resposta) 
+            Alert.alert("adicionado com sucesso!");
+        else 
+            Alert.alert("Falhou miseravelmente!");
+      } else {
         let resposta = await alteraProduto(obj);
-        if (resposta)
-          Alert.alert('Alterado com sucesso!');
-        else
-          Alert.alert('Falhou miseravelmente!');
+        if (resposta) 
+            Alert.alert("Alterado com sucesso!");
+        else 
+            Alert.alert("Falhou miseravelmente!");
       }
-      
+
       Keyboard.dismiss();
       limparCampos();
       await carregaDados();
@@ -75,55 +70,52 @@ export default function Tela1({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle = {{flexGrow:1}}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <TouchableOpacity
+          style={styles.botaoPequeno}
+          onPress={() => navigation.navigate("menu")}
+        >
+          <Text style={styles.labelBnt}>Voltar</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.botaoPequeno}
-            onPress={() => navigation.navigate("menu")}
-          >
-            <Text style={styles.labelBnt}>Voltar</Text>
-          </TouchableOpacity>
-
-          <View style={styles.areaBotoes}>
+        <View style={styles.areaBotoes}>
           <Text style={styles.title}>Nova Pizza</Text>
 
-            <Image
-              style={styles.imagem}
-              source={IconeGatinho} />
-              
-            <Text style={styles.label}>Descrição </Text>
-            <TextInput
-              onChangeText={(texto) => setDescricao(texto)}
-              value={descricao.toString()}
-              style={styles.caixaTexto} />
-            <Text style={styles.label}>Preço unitário</Text>
-            <TextInput
-              keyboardType="numeric"
-              onChangeText={(texto) => setPreco(texto)}
-              value={preco.toString()}
-              style={styles.caixaTexto} />
-            <Text style={styles.label}>Categoria</Text>
-            <DropDownPicker
-              style={styles.caixadropdown}
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems} />
+          <Image style={styles.imagem} source={IconeGatinho} />
 
-        <TouchableOpacity
-              style={styles.botaoGrande}
-              onPress={() => salvaDados()}
-            >
-              <Text style={styles.labelBnt}>Salvar</Text>
-            </TouchableOpacity>
+          <Text style={styles.label}>Descrição </Text>
+          <TextInput
+            onChangeText={(texto) => setDescricao(texto)}
+            value={descricao.toString()}
+            style={styles.caixaTexto}
+          />
+          <Text style={styles.label}>Preço unitário</Text>
+          <TextInput
+            keyboardType="numeric"
+            onChangeText={(texto) => setPreco(texto)}
+            value={preco.toString()}
+            style={styles.caixaTexto}
+          />
+          <Text style={styles.label}>Categoria</Text>
+          <DropDownPicker
+            style={styles.caixadropdown}
+            open={open}
+            value={value}
+            items={items}
+            onChangeSearchText={(texto)=>setCodigoCat(texto)}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+          />
 
-            
-
-          </View>
-          </ScrollView>
-      </View>    
-
+          <TouchableOpacity
+            style={styles.botaoGrande}
+            onPress={() => salvaDados()}
+          >
+            <Text style={styles.labelBnt}>Salvar</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
