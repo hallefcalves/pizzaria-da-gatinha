@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import styles from "./styles";
+import createTable from "../../services/dbservice";
 import IconeGatinho from '../../assets/img/pizza-cat2-modified.png';
 
 
@@ -24,7 +25,6 @@ export default function Tela1({ navigation }) {
     }
 
     console.log("UseEffect...");
-    await carregaDados();
   }
 
   useEffect(() => {
