@@ -10,6 +10,10 @@ import {
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState } from "react";
+import IconeGatinho from '../../assets/img/chef-cat-modified.png';
+import { ScrollView } from 'react-native-gesture-handler';
+
+
 
 export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState("");
@@ -24,44 +28,60 @@ export default function Tela1({ navigation }) {
 
   return (
     <View style={styles.container}>
-        
-      <Text style={styles.label}>Voltar</Text>
-      <TouchableOpacity
-        style={styles.botaoPequeno}
-        onPress={() => navigation.navigate("menu")}
-      >
-        <Text>Voltar</Text>
-      </TouchableOpacity>
+      <ScrollView contentContainerStyle = {{flexGrow:1}}>
 
-      <Text>Código</Text>
-      <TextInput
-        keyboardType="numeric"
-        onChangeText={(texto) => setCodigo(texto)}
-        value={codigo.toString()}
-        //style={styles.caixaSenha}
-      />
-      <Text>Descrição </Text>
-      <TextInput
-        onChangeText={(texto) => setDescricao(texto)}
-        value={descricao.toString()}
-        //style={styles.caixaSenha}
-      />
-      <Text>Preço unitário</Text>
-      <TextInput
-        keyboardType="numeric"
-        onChangeText={(texto) => setPreco(texto)}
-        value={preco.toString()}
-        //style={styles.caixaSenha}
-      />
-      <Text>Categoria</Text>
-      <DropDownPicker
-        open={open}
-        value={value}
-        items={items}
-        setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
-      />
-    </View>
+          <TouchableOpacity
+            style={styles.botaoPequeno}
+            onPress={() => navigation.navigate("menu")}
+          >
+            <Text style={styles.labelBnt}>Voltar</Text>
+          </TouchableOpacity>
+
+          <View style={styles.areaBotoes}>
+          <Text style={styles.title}>Nova Pizza</Text>
+
+            <Image
+              style={styles.imagem}
+              source={IconeGatinho} />
+            <Text style={styles.label}>Código</Text>
+            <TextInput
+              keyboardType="numeric"
+              onChangeText={(texto) => setCodigo(texto)}
+              value={codigo.toString()}
+              style={styles.caixaTexto} />
+            <Text style={styles.label}>Descrição </Text>
+            <TextInput
+              onChangeText={(texto) => setDescricao(texto)}
+              value={descricao.toString()}
+              style={styles.caixaTexto} />
+            <Text style={styles.label}>Preço unitário</Text>
+            <TextInput
+              keyboardType="numeric"
+              onChangeText={(texto) => setPreco(texto)}
+              value={preco.toString()}
+              style={styles.caixaTexto} />
+            <Text style={styles.label}>Categoria</Text>
+            <DropDownPicker
+              style={styles.caixadropdown}
+              open={open}
+              value={value}
+              items={items}
+              setOpen={setOpen}
+              setValue={setValue}
+              setItems={setItems} />
+
+        <TouchableOpacity
+              style={styles.botaoGrande}
+              onPress={() => navigation.navigate("menu")}
+            >
+              <Text style={styles.labelBnt}>Salvar</Text>
+            </TouchableOpacity>
+
+            
+
+          </View>
+          </ScrollView>
+      </View>    
+
   );
 }

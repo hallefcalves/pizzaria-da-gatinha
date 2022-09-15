@@ -3,20 +3,40 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fac282",
+    backgroundColor: "#74acb5",
+  },
+
+  areaBotoes: {
+    marginTop: 10,
+    width: "100%",
+    justifyContent: "space-evenly",
     alignItems: "center",
     justifyContent: "center",
+    height:950
   },
 
   label: {
-    fontSize: 30,
+    marginTop: 30,
+    fontSize: 15,
+    color: "#ffff",
+  },
+
+  labelBnt: {
+    fontSize: 15,
+    color: "#ffff",
+  },
+
+  title: {
+    marginBottom: 30,
+    fontSize: 20,
     color: "#ffff",
   },
 
   caixaTexto: {
+    marginTop: 10,
+    backgroundColor: "#92c8d1",
     borderRadius: 5,
     borderColor: "#ffff",
-    borderWidth: 4,
     width: 250,
     height: 60,
     alignItems: "center",
@@ -25,40 +45,41 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
-  caixaSenha: {
-    borderRadius: 5,
+  caixadropdown: {
+    marginTop: 10,
+    backgroundColor: "#92c8d1",
     borderColor: "#ffff",
-    borderWidth: 4,
-    width: "40%",
+    width: '100%',
     height: 60,
-    fontSize: 20,
-    justifyContent: "space-evenly",
+    alignItems: "center",
+    justifyContent: "center",
     textAlign: "center",
+    fontSize: 20,
   },
+
 
   botaoPequeno: {
     marginTop: 10,
     marginBottom: 10,
     width: 50,
     height: 50,
-    backgroundColor: "#60bd90",
+    backgroundColor: "#d6a6b0",
     borderRadius: 10,
     borderColor: "#ffff",
-    borderWidth: 2,
+    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
 
   botaoGrande: {
-    fontSize: 20,
     marginTop: 10,
     marginBottom: 10,
     width: 100,
     height: 60,
-    backgroundColor: "#60bd90",
+    backgroundColor: "#d6a6b0",
     borderRadius: 10,
     borderColor: "#ffff",
-    borderWidth: 3,
+    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -71,16 +92,11 @@ const styles = StyleSheet.create({
   },
 
   imagem: {
-    width: "17%",
-    height: "10%",
+    width: "56%",
+    height: "24%",
   },
 
-  areaBotoes: {
-    marginTop: 20,
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-evenly",
-  },
+
 });
 
 export default styles;
