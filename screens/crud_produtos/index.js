@@ -16,7 +16,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 
 export default function Tela1({ navigation }) {
-  const [codigo, setCodigo] = useState("");
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
   const [open, setOpen] = useState(false);
@@ -43,12 +42,7 @@ export default function Tela1({ navigation }) {
             <Image
               style={styles.imagem}
               source={IconeGatinho} />
-            <Text style={styles.label}>Código</Text>
-            <TextInput
-              keyboardType="numeric"
-              onChangeText={(texto) => setCodigo(texto)}
-              value={codigo.toString()}
-              style={styles.caixaTexto} />
+              
             <Text style={styles.label}>Descrição </Text>
             <TextInput
               onChangeText={(texto) => setDescricao(texto)}

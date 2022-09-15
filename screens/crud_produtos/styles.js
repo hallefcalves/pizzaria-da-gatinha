@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     justifyContent: "center",
-    height:950
+    height:750
   },
 
   label: {
@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
 
 
   botaoPequeno: {
-    marginTop: 10,
-    marginBottom: 10,
     width: 50,
     height: 50,
     backgroundColor: "#d6a6b0",
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
 
   imagem: {
     width: "56%",
-    height: "24%",
+    height: "31%",
   },
 
 
