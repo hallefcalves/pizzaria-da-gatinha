@@ -13,6 +13,7 @@ import { useState } from "react";
 import IconeGatinho from '../../assets/img/pizza-cat-modified.png';
 import IconeCarrinho from '../../assets/img/shopping_cart_icon.png';
 import { ScrollView } from 'react-native-gesture-handler';
+import { IconButton, MD3Colors } from 'react-native-paper';
 
 
 export default function Tela1({ navigation }) {
@@ -36,14 +37,16 @@ export default function Tela1({ navigation }) {
           >
             <Text style={styles.labelBnt}>Voltar</Text>
           </TouchableOpacity>
+        
+          <IconButton
+            icon="cart-outline"
+            color="#d6a6b0"
+            size={55}
+            onPress={() => navigation.navigate("menu")}
+          />
 
-          <Image
-              style={styles.imageicon}
-              onPress={() => navigation.navigate("menu")}
-              source={IconeCarrinho} />
 
         </View>
-
         <ScrollView contentContainerStyle = {{flexGrow:1}}>
 
          
