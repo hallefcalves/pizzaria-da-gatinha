@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     justifyContent: "center",
-    height:950
   },
 
   label: {
@@ -34,6 +33,7 @@ const styles = StyleSheet.create({
 
   caixaTexto: {
     marginTop: 10,
+    marginBottom: 10,
     backgroundColor: "#92c8d1",
     borderRadius: 5,
     borderColor: "#ffff",
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   botaoGrande: {
     marginTop: 10,
     marginBottom: 10,
-    width: 100,
+    width: 160,
     height: 60,
     backgroundColor: "#d6a6b0",
     borderRadius: 10,
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
   },
 
   imagem: {
-    width: "56%",
-    height: "24%",
+    width: "65%",
+    height: "44%",
   },
 
 
