@@ -3,28 +3,30 @@ import {
 } from 'react-native';
 
 import styles from './styles';
-import iconTelefone from '../../img/phone.png';
 import { Ionicons, Entypo } from '@expo/vector-icons';
+import IconeMoney from "../../assets/img/money.png";
+import IconePizza from "../../assets/img/pizza.png";
 
 
-export default function Contato({contato, removerElemento, editar}) {
+
+export default function List_Vendas({venda, removerElemento, editar}) {
     return (
-        <View style={styles.contato} >
+        <View style={styles.x} >
 
-            <Text style={styles.listaNome}> {contato.nome}</Text>
-            <View style={styles.dadosListaTelefone}>
+            <Text style={styles.x}> {venda.nome}</Text>
 
-                <Image source={iconTelefone} style={styles.iconTelefone} />
-                <Text style={styles.listaTelefone} >{contato.telefone} </Text>
+            <View style={styles.dadosListadescricao}>
+                <Image source={IconePizza} style={styles.icone} />
+                <Text style={styles.x} >{venda.descricao} </Text>
             </View>
 
             <View style={styles.dadosBotoesAcao}>
-                <TouchableOpacity onPress={() => removerElemento(contato.id)}>
-                    <Ionicons name="md-remove-circle" size={32} color="red" />
+                <TouchableOpacity onPress={() => removerElemento(venda.codigo)}>
+                    <Ionicons name="md-remove-circle" size={32} color="#92c8d1" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => editar(contato.id)}>
-                    <Entypo name="edit" size={32} color="black" />
+                <TouchableOpacity onPress={() => editar(venda.codigo)}>
+                    <Entypo name="edit" size={32} color="#d6a6b0" />
                 </TouchableOpacity>
 
             </View>
