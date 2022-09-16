@@ -1,5 +1,5 @@
 /*Screen to view all the table*/
-import React from 'react';
+/* import React from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { openDatabase } from 'react-native-sqlite-storage';
 var db = openDatabase({ name: 'dbPizzaria.db' }); 
@@ -42,4 +42,4 @@ export default class ViewAllTable extends React.Component {
       </View>
     );
   }
-}
+} */

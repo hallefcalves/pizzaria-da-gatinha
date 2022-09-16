@@ -9,28 +9,53 @@ import {
 } from "react-native";
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IconeGatinho from "../../assets/img/pizza-cat-modified.png";
 import IconeCarrinho from "../../assets/img/shopping_cart_icon.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
+import { obtemTodasCategorias } from "../../services/dbcat";
 
 export default function Tela1({ navigation }) {
-
+  
+  var cat = []
+  var pro = []
   const [preco, setPreco] = useState("");
-  const [descricao, setDescricao] = useState("");
   const [catOpen, catSetOpen] = useState(false);
   const [catValue, catSetValue] = useState(null);
-  const [catItems, catSetItems] = useState([
-    { label: "Pizza Salgada", value: "Pizza Salgada" },
-    { label: "Pizza Doce", value: "Pizza Doce" },
-  ]);
+  const [catItems, catSetItems] = useState(cat);
   const [proOpen, proSetOpen] = useState(false);
   const [proValue, proSetValue] = useState(null);
-  const [proItems, proSetItems] = useState([
-    { label: "Pizza Salgada", value: "Pizza Salgada" },
-    { label: "Pizza Doce", value: "Pizza Doce" },
-  ]);
+  const [proItems, proSetItems] = useState(pro);
+  function createUniqueId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
+  }
+
+  async function processamentoUseEffect() {
+    
+    let obj = await obtemTodasCategorias();
+    console.log(obj)
+    for(i=0;i<obj.length;i++){
+        cat.push({
+            label: obj[i].categoria,
+            value: obj[i].codigo
+        });
+    }
+    
+    console.log("UseEffect...");
+    catSetItems(cat)
+  }
+  
+  useEffect(() => {
+    console.log("executando useffect");
+    processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
+  }, []);
+
+  function limparCampos() {
+    setDescricao("");
+    setPreco("");
+    Keyboard.dismiss();
+  }
 
   return (
     <View style={styles.container}>

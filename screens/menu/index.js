@@ -68,12 +68,6 @@ export default function Tela1({ navigation }) {
         <Text style={styles.labelBnt}>Nova Categoria</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("crud_categorias")}
-      style={styles.botaoGrande}>
-        <Text style={styles.labelBnt}>Nova Categoria</Text>
-      </TouchableOpacity>
-
-      <ViewAllTable/>
     </View>
   );
 }

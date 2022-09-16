@@ -23,29 +23,30 @@ export default function Tela1({ navigation }) {
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
   }
-  async function processamentoUseEffect() {
+   async function processamentoUseEffect() {
     
     let obj = await obtemTodasCategorias();
-    for(i=0;i<=obj.rows.length;i++){
+    console.log(obj)
+    for(i=0;i<obj.length;i++){
         cat.push({
-            label: obj[i].descricao,
+            label: obj[i].categoria,
             value: obj[i].codigo
         });
     }
     
     console.log("UseEffect...");
-    return cat
+    setItems(cat)
   }
-
-  useEffect(async () => {
+  
+  useEffect(() => {
     console.log("executando useffect");
-    await processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
+    processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
   async function limparCampos() {
     setDescricao("");
     setPreco("");
     Keyboard.dismiss();
-  }
+  } 
 
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
