@@ -15,6 +15,7 @@ import IconeCarrinho from "../../assets/img/shopping_cart_icon.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
 import { obtemTodasCategorias } from "../../services/dbcat";
+import { obtemProdutosCategoria } from "../../services/dbpro"
 
 export default function Tela1({ navigation }) {
   
@@ -34,7 +35,6 @@ export default function Tela1({ navigation }) {
   async function processamentoUseEffect() {
     
     let obj = await obtemTodasCategorias();
-    console.log(obj)
     for(i=0;i<obj.length;i++){
         cat.push({
             label: obj[i].categoria,
@@ -42,12 +42,10 @@ export default function Tela1({ navigation }) {
         });
     }
     
-    console.log("UseEffect...");
     catSetItems(cat)
   }
   
   useEffect(() => {
-    console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
 
@@ -56,6 +54,18 @@ export default function Tela1({ navigation }) {
     setPreco("");
     Keyboard.dismiss();
   }
+
+  async function getPizza(codigo){
+    let obj = await obtemProdutosCategoria(codigo);
+    for(i=0;i<obj.length;i++){
+        pro.push({
+            label: obj[i].descricao,
+            value: obj[i].codigo
+        });
+    }
+    
+    proSetItems(pro)
+  } 
 
   return (
     <View style={styles.container}>
@@ -80,13 +90,14 @@ export default function Tela1({ navigation }) {
 
           <Image style={styles.imagem} source={IconeGatinho} />
 
-          <Text style={styles.label}>Tipo de Pizza</Text>
+          <Text style={styles.label}>Categoria de Pizza</Text>
           <DropDownPicker
             style={styles.caixadropdown}
             listMode="SCROLLVIEW"
             open={catOpen}
             value={catValue}
             items={catItems}
+            onChangeValue={(texto)=> getPizza(texto)}
             setOpen={catSetOpen}
             setValue={catSetValue}
             setItems={catSetItems}

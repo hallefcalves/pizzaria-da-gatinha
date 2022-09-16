@@ -64,7 +64,7 @@ export function obtemProdutosCategoria(codigo) {
     dbCx.transaction(
       (tx) => {
         let query = "select * from tbProdutos where codigoCat=?";
-        tx.executeSql(query, [produto.codigoCat], (tx, registros) => {
+        tx.executeSql(query, [codigo], (tx, registros) => {
           var retorno = [];
 
           for (let n = 0; n < registros.rows.length; n++) {

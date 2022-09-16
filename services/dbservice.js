@@ -27,7 +27,8 @@ export async function createTable() {
         (
             codigo text not null primary key,
             codigoVen text not null,
-            codigoPro text not null
+            codigoPro text not null,
+            quantidade text not null
         )`;
         const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
         (
