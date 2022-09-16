@@ -7,7 +7,7 @@ export function getDbConnection() {
 }
 
 
-export default async function createTable() {
+export async function createTable() {
     return new Promise((resolve, reject) => {
         const queryPro = `CREATE TABLE IF NOT EXISTS tbProdutos
         (
@@ -20,12 +20,19 @@ export default async function createTable() {
         (
             codigo text not null primary key,
             produtos text not null,
-            date text not null          
+            date text not null,
+            preco text not null          
+        )`;
+        const queryCom = `CREATE TABLE IF NOT EXISTS tbCompra
+        (
+            codigo text not null primary key,
+            codigoVen text not null,
+            codigoPro text not null
         )`;
         const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
         (
-           "codigo text not null primary key,"
-            "categoria text not null"       
+            codigo text not null primary key,
+            descricao text not null       
         )`;
 
         let dbCx = getDbConnection();
@@ -54,6 +61,17 @@ export default async function createTable() {
         dbCx.transaction(tx => {
             tx.executeSql(
                 queryCat, [],
+                (tx, resultado) => resolve(true)
+            )
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+        dbCx.transaction(tx => {
+            tx.executeSql(
+                queryCom, [],
                 (tx, resultado) => resolve(true)
             )
         },

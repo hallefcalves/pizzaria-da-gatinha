@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import styles from "./styles";
-import createTable from "../../services/dbservice";
+import {createTable} from "../../services/dbservice";
 import IconeGatinho from '../../assets/img/pizza-cat2-modified.png';
+import ViewAllTable from "../../componentes/viewtable";
 
 
 
@@ -21,7 +22,12 @@ export default function Tela1({ navigation }) {
     if (!tabelasCriadas) {
       console.log("Verificando necessidade de criar tabelas...");
       tabelasCriadas = true;
-      await createTable();
+      try {
+        await createTable();  
+      } catch (error) {
+        console.log(error)
+      }
+      
     }
 
     console.log("UseEffect...");
@@ -61,6 +67,13 @@ export default function Tela1({ navigation }) {
       style={styles.botaoGrande}>
         <Text style={styles.labelBnt}>Nova Categoria</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate("crud_categorias")}
+      style={styles.botaoGrande}>
+        <Text style={styles.labelBnt}>Nova Categoria</Text>
+      </TouchableOpacity>
+
+      <ViewAllTable/>
     </View>
   );
 }

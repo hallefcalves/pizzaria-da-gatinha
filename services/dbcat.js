@@ -1,6 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import getDbConnection from "./dbservice";
-
+import {getDbConnection} from "./dbservice";
 
 export function obtemTodasCategorias() {
   return new Promise((resolve, reject) => {
@@ -56,17 +55,17 @@ export function obtemUmaCategoria(codigo) {
   });
 }
 
-export function adicionacategoria(categoria) {
+export function adicionaCategoria(categoria) {
   return new Promise((resolve, reject) => {
     let query =
-      "insert into tbcategorias (codigo, categoria ,telefone) values (?,?,?)";
+      "insert into tbCategorias (codigo, categoria) values (?,?)";
     let dbCx = getDbConnection();
 
     dbCx.transaction(
-      (tx) => {
+      tx => {
         tx.executeSql(
           query,
-          [categoria.codigo, categoria.categoria, categoria.telefone],
+          [categoria.codigo, categoria.categoria],
           (tx, resultado) => {
             resolve(resultado.rowsAffected > 0);
           }
@@ -80,7 +79,7 @@ export function adicionacategoria(categoria) {
   });
 }
 
-export function alteracategoria(categoria) {
+export function alteraCategoria(categoria) {
   console.log("começando o método alteracategoria");
   return new Promise((resolve, reject) => {
     let query =
@@ -105,7 +104,7 @@ export function alteracategoria(categoria) {
   });
 }
 
-export function excluicategoria(codigo) {
+export function excluiCategoria(codigo) {
   console.log("Apagando categoria " + codigo);
   return new Promise((resolve, reject) => {
     let query = "delete from tbcategorias where codigo=?";
@@ -125,7 +124,7 @@ export function excluicategoria(codigo) {
   });
 }
 
-export function excluiTodoscategorias() {
+export function excluiTodasCategorias() {
   console.log("Apagando todos os categorias...");
   return new Promise((resolve, reject) => {
     let query = "delete from tbcategorias";

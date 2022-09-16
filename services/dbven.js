@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import getDbConnection from "./dbservice";
+import {getDbConnection} from "./dbservice";
 
 export function obtemTodosvendas() {
   return new Promise((resolve, reject) => {

@@ -5,25 +5,42 @@ import {
 } from "react-native";
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { adicionaProduto, alteraProduto } from "../../services/dbpro";
+import { obtemTodasCategorias } from "../../services/dbcat";
 import IconeGatinho from "../../assets/img/chef-cat-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Tela1({ navigation }) {
+  var cat = [];
   const [codigo, setCodigo] = useState(undefined);
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
   const [codigoCat, setCodigoCat] = useState("")
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Pizza Salgada", value: "Pizza Salgada" },
-    { label: "Pizza Doce", value: "Pizza Doce" },
-  ]);
+  const [items, setItems] = useState(cat);
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
   }
+  async function processamentoUseEffect() {
+    
+    let obj = await obtemTodasCategorias();
+    for(i=0;i<=obj.rows.length;i++){
+        cat.push({
+            label: obj[i].descricao,
+            value: obj[i].codigo
+        });
+    }
+    
+    console.log("UseEffect...");
+    return cat
+  }
+
+  useEffect(async () => {
+    console.log("executando useffect");
+    await processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
+  }, []);
   async function limparCampos() {
     setDescricao("");
     setPreco("");

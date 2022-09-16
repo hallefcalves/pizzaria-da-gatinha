@@ -1,9 +1,8 @@
-import * as SQLite from "expo-sqlite";
-import { getDbConnection } from "./dbservice";
+import {getDbConnection} from "./dbservice";
 
 export function obtemTodosprodutos() {
-  return new Promise((resolve, reject) => {
-    let dbCx = getDbConnection();
+  return new Promise( (resolve, reject) => {
+    let dbCx =  getDbConnection();
     dbCx.transaction(
       (tx) => {
         let query = "select * from tbProdutos";
