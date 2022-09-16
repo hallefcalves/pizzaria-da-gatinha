@@ -30,6 +30,12 @@ export async function createTable() {
             codigoPro text not null,
             quantidade text not null
         )`;
+        const queryCar = `CREATE TABLE IF NOT EXISTS tbCarrinho
+        (
+            codigo text not null primary key,
+            codigoPro text not null,     
+            quantidade text not null
+        )`;
         const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
         (
             codigo text not null primary key,
@@ -73,6 +79,17 @@ export async function createTable() {
         dbCx.transaction(tx => {
             tx.executeSql(
                 queryCom, [],
+                (tx, resultado) => resolve(true)
+            )
+        },
+            error => {
+                console.log(error);
+                resolve(false);
+            }
+        );
+        dbCx.transaction(tx => {
+            tx.executeSql(
+                queryCar, [],
                 (tx, resultado) => resolve(true)
             )
         },

@@ -15,23 +15,19 @@ import IconeCarrinho from "../../assets/img/shopping_cart_icon.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
 import { obtemTodasCategorias } from "../../services/dbcat";
-import { obtemProdutosCategoria, obtemUmProduto } from "../../services/dbpro"
-import { adicionaCarrinho } from "../../services/dbcar";
+import { obtemProdutosCategoria } from "../../services/dbpro"
 
 export default function Tela1({ navigation }) {
   
   var cat = []
   var pro = []
-  const [price, setPrice] = useState("");
-  const [codigoPro, setCodigoPro] = useState("");
-  const [quantidade, setQuantidade] = useState("");
+  const [preco, setPreco] = useState("");
   const [catOpen, catSetOpen] = useState(false);
   const [catValue, catSetValue] = useState(null);
   const [catItems, catSetItems] = useState(cat);
   const [proOpen, proSetOpen] = useState(false);
   const [proValue, proSetValue] = useState(null);
   const [proItems, proSetItems] = useState(pro);
-  const [totalPrice, setTotalPrice] = useState("");
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
   }
@@ -53,6 +49,12 @@ export default function Tela1({ navigation }) {
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
 
+  function limparCampos() {
+    setDescricao("");
+    setPreco("");
+    Keyboard.dismiss();
+  }
+
   async function getPizza(codigo){
     let obj = await obtemProdutosCategoria(codigo);
     for(i=0;i<obj.length;i++){
@@ -64,57 +66,6 @@ export default function Tela1({ navigation }) {
     
     proSetItems(pro)
   } 
-
-  async function getPrice(codigoPro){
-    let obj = await obtemUmProduto(codigoPro);
-    setPrice("R$ " + obj[0].preco + ",00")
-    console.log(price)
-    setCodigoPro(codigoPro)
-  }
-
-  function getTotalPrice(quantidade){
-    let num = parseInt(price.toString())
-    console.log(num)
-    console.log(quantidade)
-    setTotalPrice(num*quantidade)
-    console.log(totalPrice)
-    setQuantidade(quantidade)
-  }
-
-  async function salvaDados() {
-    let novoRegistro = codigo == undefined;
-
-    let obj = {
-      codigo: novoRegistro ? createUniqueId() : codigo,
-      codigoPro: codigoPro,
-      quantidade: quantidade
-    };
-
-    console.log(obj.codigoPro)
-
-    console.log(obj.codigo);
-    try {
-      if (novoRegistro) {
-        let resposta = await adicionaCarrinho(obj);
-
-        if (resposta) 
-            Alert.alert("Alerta","adicionado com sucesso!",["Ok", "Cancel"]);
-        else 
-            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]); 
-      } else {
-        let resposta = await alteraCarrinho(obj);
-        if (resposta) 
-            Alert.alert("Alerta","Alterado com sucesso!",["Ok", "Cancel"]);
-        else 
-            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]);
-      }
-
-      Keyboard.dismiss();
-      limparCampos();
-    } catch (e) {
-      Alert.alert(e);
-    }
-  }
 
   return (
     <View style={styles.container}>
@@ -162,22 +113,19 @@ export default function Tela1({ navigation }) {
             setOpen={proSetOpen}
             setValue={proSetValue}
             setItems={proSetItems}
-            onSelectItem={(texto) => getPrice(texto)}
-            on
           />
-          <Text style={styles.label}>Preço: {price}</Text>
 
           <Text style={styles.label}>Quantidade</Text>
           <TextInput
             keyboardType="numeric"
-            onChangeText={(texto) => getTotalPrice(texto)}
-            value={quantidade.toString()}
+            onChangeText={(texto) => setPreco(texto)}
+            value={preco.toString()}
             style={styles.caixaTexto}
           />
-          <Text style={styles.label}>Preço Total: {totalPrice}</Text>
+
           <TouchableOpacity
             style={styles.botaoGrande}
-            onPress={() => salvaDados()}
+            onPress={() => navigation.navigate("menu")}
           >
             <Text style={styles.labelBnt}>Adicionar no carrinho</Text>
           </TouchableOpacity>
