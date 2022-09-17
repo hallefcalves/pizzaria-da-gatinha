@@ -85,15 +85,16 @@ export default function Tela1({ navigation }) {
 
   return (
     <View style={styles.container}>
+    <View>
+            <TouchableOpacity
+              style={styles.botaoPequeno}
+              onPress={() => navigation.navigate("menu")}
+            >
+              <Text style={styles.labelBnt}>Voltar</Text>
+            </TouchableOpacity>
+          </View>
 
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <TouchableOpacity
-          style={styles.botaoPequeno}
-          onPress={() => navigation.navigate("menu")}
-        >
-          <Text style={styles.labelBnt}>Voltar</Text>
-        </TouchableOpacity>
-
         <View style={styles.areaBotoes}>
           <Text style={styles.title}>Nova Pizza</Text>
 
@@ -125,12 +126,25 @@ export default function Tela1({ navigation }) {
             setItems={setItems}
           />
 
+          <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+
           <TouchableOpacity
             style={styles.botaoGrande}
             onPress={() => salvaDados()}
           >
             <Text style={styles.labelBnt}>Salvar</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.botaoGrande}
+            onPress={() => navigation.navigate("list_pizzas")}
+            >
+            <Text style={styles.labelBnt}>Ver Produtos</Text>
+          </TouchableOpacity>
+
+
+          </View>
+
         </View>
       </ScrollView>
     </View>

@@ -12,12 +12,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     justifyContent: "center",
-    height:800
+    height:650
   },
 
   label: {
-    marginTop: 30,
-    fontSize: 15,
+    fontSize: 20,
     color: "#ffff",
   },
 
@@ -59,6 +58,8 @@ const styles = StyleSheet.create({
 
 
   botaoPequeno: {
+    marginTop: 10,
+    marginBottom: 10,
     width: 50,
     height: 50,
     backgroundColor: "#d6a6b0",
@@ -70,10 +71,8 @@ const styles = StyleSheet.create({
   },
 
   botaoGrande: {
-    marginTop: 15,
+    marginTop: 10,
     marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
     width: 100,
     height: 60,
     backgroundColor: "#d6a6b0",
@@ -91,12 +90,17 @@ const styles = StyleSheet.create({
     color: "#ffff",
   },
 
+  icone: {
+    width: 30,
+    height: 30,
+    marginRight: 15
+  },
+
   imagem: {
     width: 230,
     height: 230,
   },
-
-
+  
 });
 
 export default styles;
