@@ -10,125 +10,161 @@ import {
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState, useEffect } from "react";
-import IconeGatinho from "../../assets/img/pizza-cat-modified.png";
+import IconeGatinho from "../../assets/img/cat-puff-modified.png";
 import IconeCarrinho from "../../assets/img/shopping_cart_icon.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
 import { obtemTodasCategorias } from "../../services/dbcat";
-import { obtemProdutosCategoria } from "../../services/dbpro"
+import { obtemProdutosCategoria, obtemUmProduto } from "../../services/dbpro"
+import { adicionaCarrinho } from "../../services/dbcar";
+import List_Carrinho from '../../componentes/carrinho/index'
+
 
 export default function Tela1({ navigation }) {
   
   var cat = []
   var pro = []
-  const [preco, setPreco] = useState("");
+  const [price, setPrice] = useState("");
+  const [codigoPro, setCodigoPro] = useState("");
+  const [quantidade, setQuantidade] = useState("");
   const [catOpen, catSetOpen] = useState(false);
   const [catValue, catSetValue] = useState(null);
   const [catItems, catSetItems] = useState(cat);
   const [proOpen, proSetOpen] = useState(false);
   const [proValue, proSetValue] = useState(null);
   const [proItems, proSetItems] = useState(pro);
+  const [totalPrice, setTotalPrice] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [data, setData] = useState("");
+  const [preco, setPreco] = useState("");
+  const [vendas, setVendas] = useState([]);
+
+  let object = {
+    codigo: '01',
+    descricao: 'Mussarela',
+    data: '02/08/2022',
+    preco: 'R$ 35'
+
+  }
+
+  function editar(identificador) {
+    const venda = venda.find(venda => venda.codigo == identificador);
+    
+    if (venda != undefined) {
+    setcodigo(venda.codigo);
+    setNome(venda.descricao);
+    setdescricao(venda.data);
+    }
+    
+    console.log(venda);
+    }
+
+    function removerElemento(identificador) {
+        Alert.alert('Atenção', 'Confirma a remoção do venda?',
+        [
+        {
+        text: 'Sim',
+        onPress: () => efetivaRemovervenda(identificador),
+        },
+        {
+        text: 'Não',
+        style: 'cancel',
+        }
+        ]);
+        }
+
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
   }
 
-  async function processamentoUseEffect() {
-    
-    let obj = await obtemTodasCategorias();
-    for(i=0;i<obj.length;i++){
-        cat.push({
-            label: obj[i].categoria,
-            value: obj[i].codigo
-        });
-    }
-    
-    catSetItems(cat)
-  }
-  
-  useEffect(() => {
-    processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
-  }, []);
 
-  function limparCampos() {
-    setDescricao("");
-    setPreco("");
-    Keyboard.dismiss();
+  async function getPrice(codigoPro){
+    let obj = await obtemUmProduto(codigoPro);
+    setPrice("R$ " + obj[0].preco + ",00")
+    console.log(price)
+    setCodigoPro(codigoPro)
   }
 
-  async function getPizza(codigo){
-    let obj = await obtemProdutosCategoria(codigo);
-    for(i=0;i<obj.length;i++){
-        pro.push({
-            label: obj[i].descricao,
-            value: obj[i].codigo
-        });
+  function getTotalPrice(quantidade){
+    let num = parseInt(price.toString())
+    console.log(num)
+    console.log(quantidade)
+    setTotalPrice(num*quantidade)
+    console.log(totalPrice)
+    setQuantidade(quantidade)
+  }
+
+  async function salvaDados() {
+    let novoRegistro = codigo == undefined;
+
+    let obj = {
+      codigo: novoRegistro ? createUniqueId() : codigo,
+      codigoPro: codigoPro,
+      quantidade: quantidade
+    };
+
+    console.log(obj.codigoPro)
+
+    console.log(obj.codigo);
+    try {
+      if (novoRegistro) {
+        let resposta = await adicionaCarrinho(obj);
+
+        if (resposta) 
+            Alert.alert("Alerta","adicionado com sucesso!",["Ok", "Cancel"]);
+        else 
+            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]); 
+      } else {
+        let resposta = await alteraCarrinho(obj);
+        if (resposta) 
+            Alert.alert("Alerta","Alterado com sucesso!",["Ok", "Cancel"]);
+        else 
+            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]);
+      }
+
+      Keyboard.dismiss();
+      limparCampos();
+    } catch (e) {
+      Alert.alert(e);
     }
-    
-    proSetItems(pro)
-  } 
+  }
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View>
         <TouchableOpacity
           style={styles.botaoPequeno}
           onPress={() => navigation.navigate("menu")}
         >
           <Text style={styles.labelBnt}>Voltar</Text>
         </TouchableOpacity>
-
-        <IconButton
-          icon="cart-outline"
-          color="#d6a6b0"
-          size={55}
-          onPress={() => navigation.navigate("menu")}
-        />
       </View>
+
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+
+      <View style={styles.topPart}>
+        <Text style={styles.title}>Meu Carrinho</Text>
+        <Image style={styles.imagem} source={IconeGatinho} />
+        </View>
+
         <View style={styles.areaBotoes}>
-          <Text style={styles.title}>Comprar Pizza</Text>
 
-          <Image style={styles.imagem} source={IconeGatinho} />
+          {
+          <List_Carrinho venda={object}  
+          remover={removerElemento} editar={editar} />
+        }   
+        </View>
 
-          <Text style={styles.label}>Categoria de Pizza</Text>
-          <DropDownPicker
-            style={styles.caixadropdown}
-            listMode="SCROLLVIEW"
-            open={catOpen}
-            value={catValue}
-            items={catItems}
-            onChangeValue={(texto)=> getPizza(texto)}
-            setOpen={catSetOpen}
-            setValue={catSetValue}
-            setItems={catSetItems}
-          />
+        <View style={styles.topPart}>
 
-          <Text style={styles.label}>Pizza</Text>
-          <DropDownPicker
-            style={styles.caixadropdown}
-            listMode="SCROLLVIEW"
-            open={proOpen}
-            value={proValue}
-            items={proItems}
-            setOpen={proSetOpen}
-            setValue={proSetValue}
-            setItems={proSetItems}
-          />
-
-          <Text style={styles.label}>Quantidade</Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={(texto) => setPreco(texto)}
-            value={preco.toString()}
-            style={styles.caixaTexto}
-          />
-
+        <Text style={styles.label}>Preço Total: {totalPrice}</Text>
           <TouchableOpacity
             style={styles.botaoGrande}
-            onPress={() => navigation.navigate("menu")}
+            onPress={() => salvaDados()}
           >
-            <Text style={styles.labelBnt}>Adicionar no carrinho</Text>
+            <Text style={styles.labelBnt}>Completar compra</Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
     </View>

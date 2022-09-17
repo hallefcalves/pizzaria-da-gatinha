@@ -9,15 +9,21 @@ const styles = StyleSheet.create({
   areaBotoes: {
     marginTop: 10,
     width: "100%",
-    justifyContent: "space-evenly",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'stretch'
+  },
+
+  topPart: {
+    marginTop: 10,
+    width: "100%",
+    alignItems: 'center',
     justifyContent: "center",
-    height: 800
+    height:300
   },
 
   label: {
     marginTop: 30,
-    fontSize: 15,
+    fontSize: 20,
     color: "#ffff",
   },
 
@@ -92,13 +98,14 @@ const styles = StyleSheet.create({
   },
 
   imagem: {
-    width: "63%",
-    height: "33%",
+    marginBottom: 20,
+    width: 230,
+    height: 230,
   },
 
   imageicon: {
-    width: "17%",
-    height: "90%",
+    width: 230,
+    height: 230,
   },
 });
 

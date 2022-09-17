@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     justifyContent: "center",
-    height: 800
+    height: 830
   },
 
   label: {
@@ -92,13 +92,13 @@ const styles = StyleSheet.create({
   },
 
   imagem: {
-    width: "63%",
-    height: "33%",
+    width: 230,
+    height: 230,
   },
 
   imageicon: {
-    width: "17%",
-    height: "90%",
+    width: 230,
+    height: 230,
   },
 });
 

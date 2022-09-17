@@ -130,7 +130,7 @@ export default function Tela1({ navigation }) {
           icon="cart-outline"
           color="#d6a6b0"
           size={55}
-          onPress={() => navigation.navigate("menu")}
+          onPress={() => navigation.navigate("carrinho")}
         />
       </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -174,7 +174,7 @@ export default function Tela1({ navigation }) {
             value={quantidade.toString()}
             style={styles.caixaTexto}
           />
-          <Text style={styles.label}>Preço Total: {totalPrice}</Text>
+
           <TouchableOpacity
             style={styles.botaoGrande}
             onPress={() => salvaDados()}

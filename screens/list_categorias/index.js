@@ -10,47 +10,44 @@ import {
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState } from "react";
-import IconeGatinho from "../../assets/img/cat-burned-modified.png";
+import IconeGatinho from "../../assets/img/cats-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
-import List_Vendas from '../../componentes/venda/index'
+import List_categorias from '../../componentes/categoria/index'
 
 
 export default function Tela1({ navigation }) {
   const [descricao, setDescricao] = useState("");
-  const [data, setData] = useState("");
-  const [preco, setPreco] = useState("");
-  const [vendas, setVendas] = useState([]);
+  const [categorias, setcategorias] = useState([]);
 
   let object = {
     codigo: '01',
-    descricao: 'Mussarela',
-    data: '02/08/2022',
-    preco: 'R$ 250'
+    descricao: 'Pizza Salgada',
+    data: '02/08/2022'
 
   }
 
   function editar(identificador) {
-    const venda = venda.find(venda => venda.codigo == identificador);
+    const categoria = categoria.find(categoria => categoria.codigo == identificador);
     
-    if (venda != undefined) {
-    setcodigo(venda.codigo);
-    setNome(venda.descricao);
-    setdescricao(venda.data);
+    if (categoria != undefined) {
+    setcodigo(categoria.codigo);
+    setNome(categoria.descricao);
+    setdescricao(categoria.data);
     }
     
-    console.log(venda);
+    console.log(categoria);
     }
 
     function removerElemento(identificador) {
-        Alert.alert('Atenção', 'Confirma a remoção do venda?',
+        Alert.alert('Atenção', 'Confirma a remoção do categoria?',
         [
         {
         text: 'Sim',
-        onPress: () => efetivaRemovervenda(identificador),
+        onPress: () => efetivaRemovercategoria(identificador),
         },
         {
         text: 'Não',
@@ -70,14 +67,14 @@ export default function Tela1({ navigation }) {
       
 
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={styles.topPart}>
-        <Text style={styles.title}>Vendas</Text>
+        <View style={styles.topPart}>
+        <Text style={styles.title}>Categorias</Text>
         <Image style={styles.imagem} source={IconeGatinho} />
         </View>
         <View style={styles.areaBotoes}>
 
           {
-          <List_Vendas venda={object}  
+          <List_categorias categoria={object}  
           remover={removerElemento} editar={editar} />
         }       
 

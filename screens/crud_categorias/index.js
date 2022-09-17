@@ -87,7 +87,7 @@ export default function Tela1({ navigation }) {
           
           <TouchableOpacity
             style={styles.botaoGrande}
-            onPress={() => navigation.navigate("menu")}
+            onPress={() => navigation.navigate("list_categorias")}
           >
             <Text style={styles.labelBnt}>Ver Categorias</Text>
           </TouchableOpacity>

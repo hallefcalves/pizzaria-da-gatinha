@@ -4,6 +4,8 @@ import vender from "./screens/vender/index";
 import crud_categorias from "./screens/crud_categorias/index";
 import crud_produtos from "./screens/crud_produtos/index";
 import list_vendas from "./screens/list_vendas/index";
+import list_categorias from "./screens/list_categorias/index"
+import carrinho from "./screens/carrinho/index"
 import menu from "./screens/menu/index";
 
 const Routes = createAppContainer(
@@ -13,6 +15,8 @@ const Routes = createAppContainer(
     crud_categorias,
     crud_produtos,
     list_vendas,
+    list_categorias,
+    carrinho
   })
 );
 

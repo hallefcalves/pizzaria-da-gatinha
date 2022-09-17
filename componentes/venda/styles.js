@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    marginTop: 30,
-    fontSize: 15,
+    fontSize: 20,
     color: "#ffff",
   },
 
@@ -92,13 +91,13 @@ const styles = StyleSheet.create({
   },
 
   icone: {
-    width: "56%",
-    height: "24%",
+    width: 30,
+    height: 30,
   },
 
   imagem: {
-    width: "56%",
-    height: "24%",
+    width: 230,
+    height: 230,
   },
   
 });

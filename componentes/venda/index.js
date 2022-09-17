@@ -11,16 +11,15 @@ import IconePizza from "../../assets/img/pizza.png";
 
 export default function List_Vendas({venda, removerElemento, editar}) {
     return (
-        <View style={styles.x} >
+        <View style={{flexDirection: 'row', justifyContent: 'space-around',}} >
 
-            <Text style={styles.x}> {venda.nome}</Text>
+            <Text style={styles.label}> {venda.nome}</Text>
 
-            <View style={styles.dadosListadescricao}>
                 <Image source={IconePizza} style={styles.icone} />
-                <Text style={styles.x} >{venda.descricao} </Text>
-            </View>
+                <Text style={styles.label} >{venda.codigo} </Text>
+                <Text style={styles.label} >{venda.data} </Text>
+                <Text style={styles.label} >{venda.preco} </Text>
 
-            <View style={styles.dadosBotoesAcao}>
                 <TouchableOpacity onPress={() => removerElemento(venda.codigo)}>
                     <Ionicons name="md-remove-circle" size={32} color="#92c8d1" />
                 </TouchableOpacity>
@@ -29,7 +28,6 @@ export default function List_Vendas({venda, removerElemento, editar}) {
                     <Entypo name="edit" size={32} color="#d6a6b0" />
                 </TouchableOpacity>
 
-            </View>
         </View>
     );
 
