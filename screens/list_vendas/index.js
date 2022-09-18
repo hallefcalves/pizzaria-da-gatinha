@@ -1,4 +1,3 @@
-import { react } from "react";
 import {
   Text,
   Touchable,
@@ -8,16 +7,14 @@ import {
   Image,
 } from "react-native";
 import styles from "./styles";
-import DropDownPicker from "react-native-dropdown-picker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IconeGatinho from "../../assets/img/cat-burned-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
-import { IconButton, MD3Colors } from "react-native-paper";
-import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-import { Table, TableWrapper, Row } from 'react-native-table-component';
-import List_Vendas from '../../componentes/venda/index'
-
+import React, { Component } from "react";
+import List_Vendas from "../../componentes/venda/index";
+import { excluiTodasVendas, obtemTodasVendas, obtemTodasVendasCompras } from "../../services/dbven";
+import { excluiTodasCompras } from "../../services/dbcom";
+import List_ProdutosVendas from "../../componentes/produtos_vendas";
 
 export default function Tela1({ navigation }) {
   const [descricao, setDescricao] = useState("");
@@ -25,63 +22,78 @@ export default function Tela1({ navigation }) {
   const [preco, setPreco] = useState("");
   const [vendas, setVendas] = useState([]);
 
-  let object = {
-    codigo: '01',
-    descricao: 'Mussarela',
-    data: '02/08/2022',
-    preco: 'R$ 250'
-
+  async function carregaDados() {
+    let obj = await obtemTodasVendasCompras()
+    setVendas(obj);
   }
+  useEffect(() => {
+    console.log("executando useffect");
+    carregaDados(); //necessário método pois aqui não pode utilizar await...
+  }, []);
 
   function editar(identificador) {
-    const venda = venda.find(venda => venda.codigo == identificador);
-    
+    const venda = venda.find((venda) => venda.codigo == identificador);
+
     if (venda != undefined) {
-    setcodigo(venda.codigo);
-    setNome(venda.descricao);
-    setdescricao(venda.data);
-    }
-    
-    console.log(venda);
+      setcodigo(venda.codigo);
+      setNome(venda.descricao);
+      setdescricao(venda.data);
     }
 
-    function removerElemento(identificador) {
-        Alert.alert('Atenção', 'Confirma a remoção do venda?',
-        [
-        {
-        text: 'Sim',
+    console.log(venda);
+  }
+
+  function removerElemento(identificador) {
+    Alert.alert("Atenção", "Confirma a remoção do venda?", [
+      {
+        text: "Sim",
         onPress: () => efetivaRemovervenda(identificador),
-        },
-        {
-        text: 'Não',
-        style: 'cancel',
-        }
-        ]);
-        }
- 
+      },
+      {
+        text: "Não",
+        style: "cancel",
+      },
+    ]);
+  }
+
+  async function apagaVendasCompras(){
+    await excluiTodasCompras()
+    await excluiTodasVendas()
+    carregaDados()
+  }
+
   return (
     <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.botaoPequeno}
-          onPress={() => navigation.navigate("menu")}
-        >
-          <Text style={styles.labelBnt}>Voltar</Text>
-        </TouchableOpacity>
-      
+      <TouchableOpacity
+        style={styles.botaoPequeno}
+        onPress={() => navigation.navigate("menu")}
+      >
+        <Text style={styles.labelBnt}>Voltar</Text>
+      </TouchableOpacity>
 
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={styles.topPart}>
-        <Text style={styles.title}>Vendas</Text>
-        <Image style={styles.imagem} source={IconeGatinho} />
+        <View style={styles.topPart}>
+          <Text style={styles.title}>Vendas</Text>
+          <Image style={styles.imagem} source={IconeGatinho} />
         </View>
         <View style={styles.areaBotoes}>
-
-          {
-          <List_Vendas venda={object}  
-          remover={removerElemento} editar={editar} />
-        }       
-
+          {vendas.map((venda, index) => (
+            <List_Vendas
+              venda={venda}
+              index={index}
+              remover={removerElemento}
+              editar={editar} />
+              
+          ))}
         </View>
+
+
+        <TouchableOpacity
+        style={styles.botaoPequeno}
+        onPress={() => apagaVendasCompras()}
+      >
+        <Text style={styles.labelBnt}>Apaga tudo</Text>
+      </TouchableOpacity>
       </ScrollView>
     </View>
   );

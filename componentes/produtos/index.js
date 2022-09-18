@@ -13,14 +13,12 @@ export default function List_Produtos({produto, removerElemento, editar}) {
    return (
        <View style={{ alignItems: 'center',justifyContent: 'center'}} >
 
-           <Text style={styles.label}> {produto.nome}</Text>
             <View style={{flexDirection: 'row', }}>
             <Image source={IconePizza} style={styles.icone} />
                <Text style={styles.label} >{produto.categoria} </Text>
             </View>
 
             <View style={{flexDirection: 'row', }}>
-            <Text style={styles.label} >{produto.codigo} </Text>
                <Text style={styles.label} >{produto.descricao} </Text>
                <Text style={styles.label} >{produto.preco} </Text>
                </View>

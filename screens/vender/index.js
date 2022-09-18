@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
+  Keyboard
 } from "react-native";
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -22,6 +24,7 @@ export default function Tela1({ navigation }) {
   
   var cat = []
   var pro = []
+  const [codigo, setCodigo] = useState(undefined)
   const [price, setPrice] = useState("");
   const [codigoPro, setCodigoPro] = useState("");
   const [quantidade, setQuantidade] = useState("");
@@ -66,19 +69,9 @@ export default function Tela1({ navigation }) {
   } 
 
   async function getPrice(codigoPro){
-    let obj = await obtemUmProduto(codigoPro);
+    let obj = await obtemUmProduto(codigoPro.value);
     setPrice("R$ " + obj[0].preco + ",00")
-    console.log(price)
-    setCodigoPro(codigoPro)
-  }
-
-  function getTotalPrice(quantidade){
-    let num = parseInt(price.toString())
-    console.log(num)
-    console.log(quantidade)
-    setTotalPrice(num*quantidade)
-    console.log(totalPrice)
-    setQuantidade(quantidade)
+    setCodigoPro(codigoPro.value)
   }
 
   async function salvaDados() {
@@ -110,9 +103,8 @@ export default function Tela1({ navigation }) {
       }
 
       Keyboard.dismiss();
-      limparCampos();
     } catch (e) {
-      Alert.alert(e);
+      Alert.alert(e.toString());
     }
   }
 
@@ -163,14 +155,13 @@ export default function Tela1({ navigation }) {
             setValue={proSetValue}
             setItems={proSetItems}
             onSelectItem={(texto) => getPrice(texto)}
-            on
           />
           <Text style={styles.label}>Preço: {price}</Text>
 
           <Text style={styles.label}>Quantidade</Text>
           <TextInput
             keyboardType="numeric"
-            onChangeText={(texto) => getTotalPrice(texto)}
+            onChangeText={(texto) => setQuantidade(texto.toString())}
             value={quantidade.toString()}
             style={styles.caixaTexto}
           />

@@ -19,11 +19,10 @@ export async function createTable() {
         const queryVen = `CREATE TABLE IF NOT EXISTS tbVendas
         (
             codigo text not null primary key,
-            produtos text not null,
             date text not null,
             preco text not null          
         )`;
-        const queryCom = `CREATE TABLE IF NOT EXISTS tbCompra
+        const queryCom = `CREATE TABLE IF NOT EXISTS tbCompras
         (
             codigo text not null primary key,
             codigoVen text not null,
@@ -39,7 +38,7 @@ export async function createTable() {
         const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
         (
             codigo text not null primary key,
-            descricao text not null       
+            categoria text not null       
         )`;
 
         let dbCx = getDbConnection();

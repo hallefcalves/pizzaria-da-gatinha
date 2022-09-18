@@ -1,78 +1,19 @@
 import {getDbConnection} from "./dbservice";
 
-export function obtemTodosprodutos() {
-  return new Promise( (resolve, reject) => {
-    let dbCx =  getDbConnection();
-    dbCx.transaction(
-      (tx) => {
-        let query = "select * from tbProdutos";
-        tx.executeSql(query, [], (tx, registros) => {
-          var retorno = [];
-
-          for (let n = 0; n < registros.rows.length; n++) {
-            let obj = {
-              codigo: registros.rows.item(n).codigo,
-              descricao: registros.rows.item(n).descricao,
-              preco: registros.rows.item(n).preco,
-              codigoCat: registros.rows.item(n).codigoCat,
-            };
-            retorno.push(obj);
-          }
-          resolve(retorno);
-        });
-      },
-      (error) => {
-        console.log(error);
-        resolve([]);
-      }
-    );
-  });
-}
-
-export function obtemUmProduto(codigo) {
+export function obtemCompraVenda(codigo) {
   return new Promise((resolve, reject) => {
     let dbCx = getDbConnection();
     dbCx.transaction(
       (tx) => {
-        let query = "select * from tbProdutos where codigo=?";
-        tx.executeSql(query, [produto.codigo], (tx, registros) => {
-          var retorno = [];
-
-          for (let n = 0; n < registros.rows.length; n++) {
-            let obj = {
-              codigo: registros.rows.item(n).codigo,
-              descricao: registros.rows.item(n).descricao,
-              preco: registros.rows.item(n).preco,
-              codigoCat: registros.rows.item(n).codigoCat,
-            };
-            retorno.push(obj);
-          }
-          resolve(retorno);
-        });
-      },
-      (error) => {
-        console.log(error);
-        resolve([]);
-      }
-    );
-  });
-}
-
-export function obtemProdutosCategoria(codigo) {
-  return new Promise((resolve, reject) => {
-    let dbCx = getDbConnection();
-    dbCx.transaction(
-      (tx) => {
-        let query = "select * from tbProdutos where codigoCat=?";
+        let query = "select * from tbCompras where codigoVen=?";
         tx.executeSql(query, [codigo], (tx, registros) => {
           var retorno = [];
 
           for (let n = 0; n < registros.rows.length; n++) {
             let obj = {
               codigo: registros.rows.item(n).codigo,
-              descricao: registros.rows.item(n).descricao,
-              preco: registros.rows.item(n).preco,
-              codigoCat: registros.rows.item(n).codigoCat,
+              codigoPro: registros.rows.item(n).codigoPro,
+              quantidade: registros.rows.item(n).quantidade,
             };
             retorno.push(obj);
           }
@@ -87,16 +28,16 @@ export function obtemProdutosCategoria(codigo) {
   });
 }
 
-export function adicionaProduto(produto) {
+export function adicionaCompra(compra) {
   return new Promise((resolve, reject) => {
     let query =
-      "insert into tbProdutos (codigo, descricao, preco, codigoCat) values (?,?,?,?)";
+      "insert into tbCompras (codigo, codigoVen, codigoPro, quantidade) values (?,?,?,?)";
     let dbCx = getDbConnection();
     dbCx.transaction(
       (tx) => {
         tx.executeSql(
           query,
-          [produto.codigo, produto.descricao, produto.preco, produto.codigoCat],
+          [compra.codigo, compra.codigoVen, compra.codigoPro, compra.quantidade],
           (tx, resultado) => {
             resolve(resultado.rowsAffected > 0);
           }
@@ -110,55 +51,10 @@ export function adicionaProduto(produto) {
   });
 }
 
-export function alteraProduto(produto) {
-  console.log("começando o método alteraProduto");
+export function excluiTodasCompras() {
+  console.log("Apagando todos os compras...");
   return new Promise((resolve, reject) => {
-    let query =
-      "update tbProdutos set descricao=?, preco=?, codigoCat=? where codigo=?";
-    let dbCx = getDbConnection();
-
-    dbCx.transaction(
-      (tx) => {
-        tx.executeSql(
-          query,
-          [produto.descricao, produto.preco, produto.codigoCat, produto.codigo],
-          (tx, resultado) => {
-            resolve(resultado.rowsAffected > 0);
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-        resolve(false);
-      }
-    );
-  });
-}
-
-export function excluiProduto(codigo) {
-  console.log("Apagando produto " + codigo);
-  return new Promise((resolve, reject) => {
-    let query = "delete from tbProdutos where codigo=?";
-    let dbCx = getDbConnection();
-
-    dbCx.transaction(
-      (tx) => {
-        tx.executeSql(query, [codigo], (tx, resultado) => {
-          resolve(resultado.rowsAffected > 0);
-        });
-      },
-      (error) => {
-        console.log(error);
-        resolve(false);
-      }
-    );
-  });
-}
-
-export function excluiTodosProdutos() {
-  console.log("Apagando todos os produtos...");
-  return new Promise((resolve, reject) => {
-    let query = "delete from tbProdutos";
+    let query = "delete from tbcompras";
     let dbCx = getDbConnection();
     dbCx.transaction(
       (tx) => {
