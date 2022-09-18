@@ -28,6 +28,35 @@ export function obtemCompraVenda(codigo) {
   });
 }
 
+export function obtemTodasCompras() {
+  return new Promise((resolve, reject) => {
+    let dbCx = getDbConnection();
+    dbCx.transaction(
+      (tx) => {
+        let query = "select * from tbCompras";
+        tx.executeSql(query, [], (tx, registros) => {
+          var retorno = [];
+
+          for (let n = 0; n < registros.rows.length; n++) {
+            let obj = {
+              codigo: registros.rows.item(n).codigo,
+              codigoPro: registros.rows.item(n).codigoPro,
+              codigoVen: registros.rows.item(n).codigoVen,
+              quantidade: registros.rows.item(n).quantidade,
+            };
+            retorno.push(obj);
+          }
+          resolve(retorno);
+        });
+      },
+      (error) => {
+        console.log(error);
+        resolve([]);
+      }
+    );
+  });
+}
+
 export function adicionaCompra(compra) {
   return new Promise((resolve, reject) => {
     let query =

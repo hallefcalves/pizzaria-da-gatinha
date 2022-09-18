@@ -23,7 +23,7 @@ export default function List_Produtos({ produto, removerElemento, editar }) {
           <Entypo name="edit" size={32} color="#d6a6b0" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.label}>Valor: R$ {produto.preco},00 </Text>
+      <Text style={styles.label}>Valor: R$ {produto.preco},00{'\n'} </Text>
 
       <View style={{ flexDirection: "row" }}>
         

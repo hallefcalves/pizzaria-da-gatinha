@@ -5,7 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
 } from "react-native";
 import styles from "./styles";
 import { useState, useEffect } from "react";
@@ -19,7 +19,11 @@ import {
   obtemTodasVendas,
   obtemTodasVendasCompras,
 } from "../../services/dbven";
-import { excluiTodasCompras, excluiCompraVenda } from "../../services/dbcom";
+import {
+  excluiTodasCompras,
+  excluiCompraVenda,
+  obtemTodasCompras,
+} from "../../services/dbcom";
 import List_ProdutosVendas from "../../componentes/produtos_vendas";
 
 export default function Tela1({ navigation }) {
@@ -31,25 +35,13 @@ export default function Tela1({ navigation }) {
 
   async function carregaDados() {
     let objVen = await obtemTodasVendasCompras();
-
+    console.log(objVen)
+    let objCom = await obtemTodasCompras();
     setVendas(objVen);
   }
   useEffect(() => {
-    console.log("executando useffect");
     carregaDados(); //necessário método pois aqui não pode utilizar await...
   }, []);
-
-  function editar(identificador) {
-    const venda = venda.find((venda) => venda.codigo == identificador);
-
-    if (venda != undefined) {
-      setcodigo(venda.codigo);
-      setNome(venda.descricao);
-      setdescricao(venda.data);
-    }
-
-    console.log(venda);
-  }
 
   function removerElemento(identificador) {
     Alert.alert("Atenção", "Confirma a remoção do venda?", [
@@ -64,14 +56,14 @@ export default function Tela1({ navigation }) {
     ]);
   }
 
-  async function efetivaRemoverVenda(identificador){
+  async function efetivaRemoverVenda(identificador) {
     try {
-      await excluiCompraVenda(identificador)
-      await excluiVenda(identificador)
+      await excluiCompraVenda(identificador);
+      await excluiVenda(identificador);
     } catch (error) {
-      Alert.alert(error.toString())
+      Alert.alert(error.toString());
     }
-    carregaDados()
+    carregaDados();
   }
 
   async function apagaVendasCompras() {
@@ -79,9 +71,9 @@ export default function Tela1({ navigation }) {
       await excluiTodasCompras();
       await excluiTodasVendas();
     } catch (error) {
-      Alert.alert(error.toString())
+      Alert.alert(error.toString());
     }
-    
+
     carregaDados();
   }
 
@@ -101,29 +93,22 @@ export default function Tela1({ navigation }) {
         </View>
         <View style={styles.areaBotoes}>
           {vendas.map((venda, index) => (
-            <>
-              <List_Vendas
-                venda={venda}
-                index={index}
-                removerElemento={removerElemento}
-                editar={editar}
-              />
-              <List_ProdutosVendas
-                venda={venda}
-                index={index}
-              ></List_ProdutosVendas>
-            </>
+            <List_Vendas
+              venda={venda}
+              index={index}
+              removerElemento={removerElemento}
+            />
           ))}
         </View>
       </ScrollView>
-      <View style={{    alignItems: "center",justifyContent: "center",}}>
-      <TouchableOpacity
+      <View style={{ alignItems: "center", justifyContent: "center" }}>
+        <TouchableOpacity
           style={styles.botaoGrande}
           onPress={() => apagaVendasCompras()}
         >
           <Text style={styles.labelBnt}>Apaga tudo</Text>
         </TouchableOpacity>
-        </View>
+      </View>
     </View>
   );
 }
