@@ -34,8 +34,7 @@ export function obtemTodasVendasCompras() {
     let dbCx = getDbConnection();
     dbCx.transaction(
       (tx) => {
-        let query = 
-          `select c.quantidade, p.descricao, v.date, v.preco as full, p.preco as unit 
+        let query = `select c.quantidade, p.descricao, v.date, v.preco as full, p.preco as unit 
           from 
           tbCompras c
           inner join  
@@ -49,41 +48,13 @@ export function obtemTodasVendasCompras() {
           var retorno = [];
 
           for (let n = 0; n < registros.rows.length; n++) {
-            console.log(registros.rows.item(n))
+            console.log(registros.rows.item(n));
             let obj = {
               descricao: registros.rows.item(n).descricao,
               date: registros.rows.item(n).date,
               unit: registros.rows.item(n).unit,
               full: registros.rows.item(n).full,
               quantidade: registros.rows.item(n).quantidade,
-            };
-            retorno.push(obj);
-          }
-          resolve(retorno);
-        });
-      },
-      (error) => {
-        console.log(error);
-        resolve([]);
-      }
-    );
-  });
-}
-
-export function obtemUmaVenda(codigo) {
-  return new Promise((resolve, reject) => {
-    let dbCx = getDbConnection();
-    dbCx.transaction(
-      (tx) => {
-        let query = "select * from tbVendas where codigo=?";
-        tx.executeSql(query, [venda.codigo], (tx, registros) => {
-          var retorno = [];
-
-          for (let n = 0; n < registros.rows.length; n++) {
-            let obj = {
-              codigo: registros.rows.item(n).codigo,
-              date: registros.rows.item(n).date,
-              preco: registros.rows.item(n).preco,
             };
             retorno.push(obj);
           }

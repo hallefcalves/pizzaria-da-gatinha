@@ -28,33 +28,6 @@ export function obtemTodasCategorias() {
   });
 }
 
-export function obtemUmaCategoria(codigo) {
-  return new Promise((resolve, reject) => {
-    let dbCx = getDbConnection();
-    dbCx.transaction(
-      (tx) => {
-        let query = "select * from tbCategorias where codigo=?";
-        tx.executeSql(query, [categoria.codigo], (tx, registros) => {
-          var retorno = [];
-
-          for (let n = 0; n < registros.rows.length; n++) {
-            let obj = {
-              codigo: registros.rows.item(n).codigo,
-              categoria: registros.rows.item(n).categoria,
-            };
-            retorno.push(obj);
-          }
-          resolve(retorno);
-        });
-      },
-      (error) => {
-        console.log(error);
-        resolve([]);
-      }
-    );
-  });
-}
-
 export function adicionaCategoria(categoria) {
   return new Promise((resolve, reject) => {
     let query =
@@ -80,17 +53,17 @@ export function adicionaCategoria(categoria) {
 }
 
 export function alteraCategoria(categoria) {
-  console.log("começando o método alteracategoria");
+  console.log("começando o método alteraCategoria");
   return new Promise((resolve, reject) => {
     let query =
-      "update tbcategorias set categoria=?, telefone=? where codigo=?";
+      "update tbcategorias set categoria=? where codigo=?";
     let dbCx = getDbConnection();
 
     dbCx.transaction(
       (tx) => {
         tx.executeSql(
           query,
-          [categoria.categoria, categoria.telefone, categoria.codigo],
+          [categoria.descricao, categoria.codigo],
           (tx, resultado) => {
             resolve(resultado.rowsAffected > 0);
           }

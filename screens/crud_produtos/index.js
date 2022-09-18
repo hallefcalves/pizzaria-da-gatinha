@@ -1,7 +1,12 @@
 import { react } from "react";
 import {
-    Alert, Text, TextInput, TouchableOpacity,
-    View, Keyboard, Image
+  Alert,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Keyboard,
+  Image,
 } from "react-native";
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -16,27 +21,34 @@ export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState(undefined);
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [codigoCat, setCodigoCat] = useState("")
+  const [codigoCat, setCodigoCat] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState(cat);
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
   }
-   async function processamentoUseEffect() {
-    
+  async function processamentoUseEffect() {
     let obj = await obtemTodasCategorias();
-    for(i=0;i<obj.length;i++){
-        cat.push({
-            label: obj[i].categoria,
-            value: obj[i].codigo
-        });
+    for (let i = 0; i < obj.length; i++) {
+      cat.push({
+        label: obj[i].categoria,
+        value: obj[i].codigo,
+      });
     }
-    
+
+    if (navigation.getParam("produto", undefined) != undefined) {
+      let object = navigation.getParam("produto");
+      setCodigo(object.codigo);
+      setDescricao(object.descricao);
+      setPreco(object.preco);
+      setCodigoCat(object.codigoCat);
+      setValue
+    }
     console.log("UseEffect...");
-    setItems(cat)
+    setItems(cat);
   }
-  
+
   useEffect(() => {
     console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
@@ -45,7 +57,7 @@ export default function Tela1({ navigation }) {
     setDescricao("");
     setPreco("");
     Keyboard.dismiss();
-  } 
+  }
 
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
@@ -54,26 +66,24 @@ export default function Tela1({ navigation }) {
       codigo: novoRegistro ? createUniqueId() : codigo,
       descricao: descricao,
       preco: preco,
-      codigoCat: codigoCat
+      codigoCat: codigoCat,
     };
 
-    console.log(obj.codigoCat)
+    console.log(obj.codigoCat);
 
     console.log(obj.codigo);
     try {
       if (novoRegistro) {
         let resposta = await adicionaProduto(obj);
 
-        if (resposta) 
-            Alert.alert("Alerta","adicionado com sucesso!",["Ok", "Cancel"]);
-        else 
-            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]); 
+        if (resposta)
+          Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
+        else Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
       } else {
         let resposta = await alteraProduto(obj);
-        if (resposta) 
-            Alert.alert("Alerta","Alterado com sucesso!",["Ok", "Cancel"]);
-        else 
-            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]);
+        if (resposta)
+          Alert.alert("Alerta", "Alterado com sucesso!", ["Ok", "Cancel"]);
+        else Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
       }
 
       Keyboard.dismiss();
@@ -85,14 +95,14 @@ export default function Tela1({ navigation }) {
 
   return (
     <View style={styles.container}>
-    <View>
-            <TouchableOpacity
-              style={styles.botaoPequeno}
-              onPress={() => navigation.navigate("menu")}
-            >
-              <Text style={styles.labelBnt}>Voltar</Text>
-            </TouchableOpacity>
-          </View>
+      <View>
+        <TouchableOpacity
+          style={styles.botaoPequeno}
+          onPress={() => navigation.navigate("menu")}
+        >
+          <Text style={styles.labelBnt}>Voltar</Text>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.areaBotoes}>
@@ -116,35 +126,34 @@ export default function Tela1({ navigation }) {
           <Text style={styles.label}>Categoria</Text>
           <DropDownPicker
             listMode="SCROLLVIEW"
+            defaultValue={codigoCat}
             style={styles.caixadropdown}
             open={open}
             value={value}
             items={items}
-            onChangeValue={(texto)=>setCodigoCat(texto)}
+            onChangeValue={(texto) => setCodigoCat(texto)}
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
           />
 
-          <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-
-          <TouchableOpacity
-            style={styles.botaoGrande}
-            onPress={() => salvaDados()}
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
-            <Text style={styles.labelBnt}>Salvar</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botaoGrande}
-            onPress={() => navigation.navigate("list_pizzas")}
+            <TouchableOpacity
+              style={styles.botaoGrande}
+              onPress={() => salvaDados()}
             >
-            <Text style={styles.labelBnt}>Ver Produtos</Text>
-          </TouchableOpacity>
+              <Text style={styles.labelBnt}>Salvar</Text>
+            </TouchableOpacity>
 
-
+            <TouchableOpacity
+              style={styles.botaoGrande}
+              onPress={() => navigation.navigate("list_pizzas")}
+            >
+              <Text style={styles.labelBnt}>Ver Produtos</Text>
+            </TouchableOpacity>
           </View>
-
         </View>
       </ScrollView>
     </View>

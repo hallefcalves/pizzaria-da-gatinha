@@ -13,10 +13,8 @@ export default function List_Categorias({categoria, removerElemento, editar}) {
    return (
        <View style={{flexDirection: 'row', justifyContent: 'space-around',}} >
 
-           <Text style={styles.label}> {categoria.nome}</Text>
-
                <Image source={IconeTag} style={styles.icone} />
-               <Text style={styles.label} >{categoria.descricao} </Text>
+               <Text style={styles.label} >{categoria.categoria} </Text>
 
                <TouchableOpacity onPress={() => removerElemento(categoria.codigo)}>
                    <Ionicons name="md-remove-circle" size={32} color="#92c8d1" />

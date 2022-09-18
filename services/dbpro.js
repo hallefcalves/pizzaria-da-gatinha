@@ -1,11 +1,11 @@
 import {getDbConnection} from "./dbservice";
 
-export function obtemTodosprodutos() {
+export function obtemTodosProdutos() {
   return new Promise( (resolve, reject) => {
     let dbCx =  getDbConnection();
     dbCx.transaction(
       (tx) => {
-        let query = "select * from tbProdutos";
+        let query = "select p.codigo, c.categoria, p.descricao, p.preco, p.codigoCat from tbProdutos p inner join tbCategorias c on p.codigoCat = c.codigo  ";
         tx.executeSql(query, [], (tx, registros) => {
           var retorno = [];
 
@@ -13,6 +13,7 @@ export function obtemTodosprodutos() {
             let obj = {
               codigo: registros.rows.item(n).codigo,
               descricao: registros.rows.item(n).descricao,
+              categoria: registros.rows.item(n).categoria,
               preco: registros.rows.item(n).preco,
               codigoCat: registros.rows.item(n).codigoCat,
             };
