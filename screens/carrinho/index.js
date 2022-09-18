@@ -45,7 +45,6 @@ export default function Tela1({ navigation }) {
     setCodPro(codex);
     setQuant(quin);
     setCarrinhos(obj);
-    
     getTotalPrice(obj);
   }
 
@@ -166,7 +165,7 @@ export default function Tela1({ navigation }) {
             <List_Carrinho
               carrinho={carrinho}
               index={index}
-              remover={removerElemento}
+              removerElemento={removerElemento}
               editar={editar}
             />
           ))}

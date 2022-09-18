@@ -34,7 +34,7 @@ export function obtemTodasVendasCompras() {
     let dbCx = getDbConnection();
     dbCx.transaction(
       (tx) => {
-        let query = `select c.quantidade, p.descricao, v.date, v.preco as full, p.preco as unit 
+        let query = `select v.codigo, c.quantidade, p.descricao, v.date, v.preco as full, p.preco as unit 
           from 
           tbCompras c
           inner join  
@@ -50,6 +50,7 @@ export function obtemTodasVendasCompras() {
           for (let n = 0; n < registros.rows.length; n++) {
             console.log(registros.rows.item(n));
             let obj = {
+              codigo: registros.rows.item(n).codigo,
               descricao: registros.rows.item(n).descricao,
               date: registros.rows.item(n).date,
               unit: registros.rows.item(n).unit,

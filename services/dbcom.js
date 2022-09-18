@@ -69,3 +69,22 @@ export function excluiTodasCompras() {
     );
   });
 }
+
+export function excluiCompraVenda(codigo) {
+  console.log("Apagando compras - venda: "+{codigo}+"...");
+  return new Promise((resolve, reject) => {
+    let query = "delete from tbCompras where codigoVen = ?";
+    let dbCx = getDbConnection();
+    dbCx.transaction(
+      (tx) => {
+        tx.executeSql(query, [codigo.codigo], (tx, resultado) =>
+          resolve(resultado.rowsAffected > 0)
+        );
+      },
+      (error) => {
+        console.log(error);
+        resolve(false);
+      }
+    );
+  });
+}

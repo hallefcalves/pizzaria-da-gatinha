@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert
 } from "react-native";
 import styles from "./styles";
 import { useState, useEffect } from "react";
@@ -14,10 +15,11 @@ import React, { Component } from "react";
 import List_Vendas from "../../componentes/venda/index";
 import {
   excluiTodasVendas,
+  excluiVenda,
   obtemTodasVendas,
   obtemTodasVendasCompras,
 } from "../../services/dbven";
-import { excluiTodasCompras } from "../../services/dbcom";
+import { excluiTodasCompras, excluiCompraVenda } from "../../services/dbcom";
 import List_ProdutosVendas from "../../componentes/produtos_vendas";
 
 export default function Tela1({ navigation }) {
@@ -53,7 +55,7 @@ export default function Tela1({ navigation }) {
     Alert.alert("Atenção", "Confirma a remoção do venda?", [
       {
         text: "Sim",
-        onPress: () => efetivaRemovervenda(identificador),
+        onPress: () => efetivaRemoverVenda(identificador),
       },
       {
         text: "Não",
@@ -62,9 +64,24 @@ export default function Tela1({ navigation }) {
     ]);
   }
 
+  async function efetivaRemoverVenda(identificador){
+    try {
+      await excluiCompraVenda(identificador)
+      await excluiVenda(identificador)
+    } catch (error) {
+      Alert.alert(error.toString())
+    }
+    carregaDados()
+  }
+
   async function apagaVendasCompras() {
-    await excluiTodasCompras();
-    await excluiTodasVendas();
+    try {
+      await excluiTodasCompras();
+      await excluiTodasVendas();
+    } catch (error) {
+      Alert.alert(error.toString())
+    }
+    
     carregaDados();
   }
 
