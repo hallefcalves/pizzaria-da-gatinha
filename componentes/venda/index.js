@@ -14,17 +14,17 @@ export default function List_Vendas({ venda, removerElemento, editar, index }) {
     <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
 
       <Image source={IconePizza} style={styles.icone} />
-      <Text style={styles.label}>{venda.date} </Text>
-      <Text style={styles.label}>Valor total: R${venda.full} </Text>
+      <Text style={styles.label}>{venda.codigo} </Text>
+
       <TouchableOpacity onPress={() => removerElemento(venda.codigo)}>
         <Ionicons name="md-remove-circle" size={32} color="#92c8d1" />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => editar(venda.codigo)}>
-        <Entypo name="edit" size={32} color="#d6a6b0" />
-      </TouchableOpacity>
-
       </View>
+      <Text style={styles.label}>{venda.date} </Text>
+      <Text style={styles.label}>Valor total: R${venda.full} </Text>
+      <Text style={styles.label}>Produtos:</Text>
+
       </View>
   );
 }

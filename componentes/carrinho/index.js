@@ -15,10 +15,6 @@ export default function List_Carrinho({ carrinho, removerElemento, editar }) {
         <TouchableOpacity onPress={() => removerElemento(carrinho.codigo)}>
           <Ionicons name="md-remove-circle" size={32} color="#92c8d1" />
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => editar(carrinho.codigo)}>
-          <Entypo name="edit" size={32} color="#d6a6b0" />
-        </TouchableOpacity>
       </View>
       <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
         <Text style={styles.label}>R$: {carrinho.preco},00 </Text>

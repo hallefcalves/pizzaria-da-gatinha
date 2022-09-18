@@ -108,8 +108,6 @@ export default function Tela1({ navigation }) {
                 removerElemento={removerElemento}
                 editar={editar}
               />
-              <Text style={styles.title}>{"\n"}Produtos</Text>
-
               <List_ProdutosVendas
                 venda={venda}
                 index={index}
@@ -117,14 +115,15 @@ export default function Tela1({ navigation }) {
             </>
           ))}
         </View>
-
-        <TouchableOpacity
-          style={styles.botaoPequeno}
+      </ScrollView>
+      <View style={{    alignItems: "center",justifyContent: "center",}}>
+      <TouchableOpacity
+          style={styles.botaoGrande}
           onPress={() => apagaVendasCompras()}
         >
           <Text style={styles.labelBnt}>Apaga tudo</Text>
         </TouchableOpacity>
-      </ScrollView>
+        </View>
     </View>
   );
 }
