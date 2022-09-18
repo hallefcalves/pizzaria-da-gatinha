@@ -88,15 +88,15 @@ export default function Tela1({ navigation }) {
               <List_Vendas
                 venda={venda}
                 index={index}
-                remover={removerElemento}
+                removerElemento={removerElemento}
                 editar={editar}
               />
-              {vendas.map((venda, index) => (
-                <List_ProdutosVendas
-                  venda={venda}
-                  index={index}
-                ></List_ProdutosVendas>
-              ))}
+              <Text style={styles.title}>{"\n"}Produtos</Text>
+
+              <List_ProdutosVendas
+                venda={venda}
+                index={index}
+              ></List_ProdutosVendas>
             </>
           ))}
         </View>

@@ -12,7 +12,6 @@ import IconePizza from "../../assets/img/pizza.png";
 export default function List_ProdutosVendas({venda}) {
    return (
     <View style={{ alignItems: 'center',justifyContent: 'center'}} >
-            <Text style={styles.title}>{'\n'}Produtos</Text>
             <View style={{flexDirection: 'row', }}>
             <Image source={IconePizza} style={styles.icone} />
             <Text style={styles.label} > Nome: {venda.descricao} </Text>
