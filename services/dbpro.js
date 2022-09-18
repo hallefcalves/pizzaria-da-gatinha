@@ -5,7 +5,7 @@ export function obtemTodosProdutos() {
     let dbCx =  getDbConnection();
     dbCx.transaction(
       (tx) => {
-        let query = "select p.codigo, c.categoria, p.descricao, p.preco, p.codigoCat from tbProdutos p inner join tbCategorias c on p.codigoCat = c.codigo  ";
+        let query = "select p.codigo, c.descricao as cat, p.descricao, p.preco, p.codigoCat from tbProdutos p inner join tbCategorias c on p.codigoCat = c.codigo  ";
         tx.executeSql(query, [], (tx, registros) => {
           var retorno = [];
 
@@ -13,7 +13,7 @@ export function obtemTodosProdutos() {
             let obj = {
               codigo: registros.rows.item(n).codigo,
               descricao: registros.rows.item(n).descricao,
-              categoria: registros.rows.item(n).categoria,
+              categoria: registros.rows.item(n).cat,
               preco: registros.rows.item(n).preco,
               codigoCat: registros.rows.item(n).codigoCat,
             };

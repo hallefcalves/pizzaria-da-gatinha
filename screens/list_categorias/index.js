@@ -29,6 +29,7 @@ export default function Tela1({ navigation }) {
 
   async function processamentoUseEffect() {
     let obj = await obtemTodasCategorias();
+    console.log(obj)
 
     setCategorias(obj);
 

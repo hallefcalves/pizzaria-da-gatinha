@@ -32,7 +32,7 @@ export default function Tela1({ navigation }) {
     let obj = await obtemTodasCategorias();
     for (let i = 0; i < obj.length; i++) {
       cat.push({
-        label: obj[i].categoria,
+        label: obj[i].descricao,
         value: obj[i].codigo,
       });
     }

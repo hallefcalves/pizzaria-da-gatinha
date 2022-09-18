@@ -25,6 +25,7 @@ export default function Tela1({ navigation }) {
   let quin = [];
   let codex = [];
   let time;
+  const [medium, setMedium] = useState();
   const [today, setToday] = useState();
   const [codPro, setCodPro] = useState([]);
   const [quant, setQuant] = useState([]);
@@ -39,7 +40,7 @@ export default function Tela1({ navigation }) {
       quin.push(obj[i].quantidade);
     }
     time = Date.now();
-    let medium = moment(new Date(time)).format('DD/MM/YYYY')
+    setMedium(moment(new Date(time)).format('DD/MM/YYYY'));
     setToday(medium)
     setCodPro(codex);
     setQuant(quin);
@@ -106,7 +107,7 @@ export default function Tela1({ navigation }) {
 
     let objVen = {
       codigo: novoRegistro ? createUniqueId() : codigo,
-      date: today.toDateString(),
+      date: medium,
       preco: totalPrice,
     };
     console.log(codPro[0])

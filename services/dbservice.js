@@ -38,7 +38,7 @@ export async function createTable() {
         const queryCat = `CREATE TABLE IF NOT EXISTS tbCategorias
         (
             codigo text not null primary key,
-            categoria text not null       
+            descricao text not null       
         )`;
 
         let dbCx = getDbConnection();

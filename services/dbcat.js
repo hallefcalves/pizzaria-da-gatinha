@@ -13,7 +13,7 @@ export function obtemTodasCategorias() {
           for (let n = 0; n < registros.rows.length; n++) {
             let obj = {
               codigo: registros.rows.item(n).codigo,
-              categoria: registros.rows.item(n).categoria,
+              descricao: registros.rows.item(n).descricao,
             };
             retorno.push(obj);
           }
@@ -31,14 +31,14 @@ export function obtemTodasCategorias() {
 export function adicionaCategoria(categoria) {
   return new Promise((resolve, reject) => {
     let query =
-      "insert into tbCategorias (codigo, categoria) values (?,?)";
+      "insert into tbCategorias (codigo, descricao) values (?,?)";
     let dbCx = getDbConnection();
 
     dbCx.transaction(
       tx => {
         tx.executeSql(
           query,
-          [categoria.codigo, categoria.categoria],
+          [categoria.codigo, categoria.descricao],
           (tx, resultado) => {
             resolve(resultado.rowsAffected > 0);
           }
@@ -56,7 +56,7 @@ export function alteraCategoria(categoria) {
   console.log("começando o método alteraCategoria");
   return new Promise((resolve, reject) => {
     let query =
-      "update tbcategorias set categoria=? where codigo=?";
+      "update tbcategorias set descricao=? where codigo=?";
     let dbCx = getDbConnection();
 
     dbCx.transaction(

@@ -20,13 +20,15 @@ export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState(undefined);
   const [categoria, setCategoria] = useState();
   const [descricao, setDescricao] = useState("");
+  const [label,  setLabel] = useState("Adicionar Categoria")
 
   async function processamentoUseEffect() {
     console.log("UseEffect...");
     if (navigation.getParam("categoria", undefined) != undefined) {
       let object = navigation.getParam("categoria");
       setCodigo(object.codigo);
-      setDescricao(object.categoria);
+      setDescricao(object.descricao);
+      setLabel("Atualizar Categoria")
     }
   }
 
@@ -94,7 +96,7 @@ export default function Tela1({ navigation }) {
             style={styles.botaoGrande}
             onPress={() => salvaDados()}
           >
-            <Text style={styles.labelBnt}>Adicionar categoria</Text>
+            <Text style={styles.labelBnt}>{label}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
