@@ -19,6 +19,7 @@ import {
 import { adicionaVenda } from "../../services/dbven";
 import { adicionaCompra } from "../../services/dbcom";
 import List_Carrinho from "../../componentes/carrinho/index";
+import moment from 'moment';
 
 export default function Tela1({ navigation }) {
   let quin = [];
@@ -37,8 +38,8 @@ export default function Tela1({ navigation }) {
       codex.push(obj[i].codigoPro);
       quin.push(obj[i].quantidade);
     }
-    time = Date.now()
-    let medium = new Date(time);
+    time = Date.now();
+    let medium = moment(new Date(time)).format('DD/MM/YYYY')
     setToday(medium)
     setCodPro(codex);
     setQuant(quin);

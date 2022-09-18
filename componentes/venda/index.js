@@ -23,10 +23,8 @@ export default function List_Vendas({ venda, removerElemento, editar, index }) {
       <TouchableOpacity onPress={() => editar(venda.codigo)}>
         <Entypo name="edit" size={32} color="#d6a6b0" />
       </TouchableOpacity>
-      
+
       </View>
-      <List_ProdutosVendas venda={venda} index={index}>
-      </List_ProdutosVendas>
       </View>
   );
 }

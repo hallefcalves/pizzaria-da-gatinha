@@ -12,7 +12,11 @@ import IconeGatinho from "../../assets/img/cat-burned-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
 import React, { Component } from "react";
 import List_Vendas from "../../componentes/venda/index";
-import { excluiTodasVendas, obtemTodasVendas, obtemTodasVendasCompras } from "../../services/dbven";
+import {
+  excluiTodasVendas,
+  obtemTodasVendas,
+  obtemTodasVendasCompras,
+} from "../../services/dbven";
 import { excluiTodasCompras } from "../../services/dbcom";
 import List_ProdutosVendas from "../../componentes/produtos_vendas";
 
@@ -21,10 +25,12 @@ export default function Tela1({ navigation }) {
   const [data, setData] = useState("");
   const [preco, setPreco] = useState("");
   const [vendas, setVendas] = useState([]);
+  const [compras, setCompras] = useState([]);
 
   async function carregaDados() {
-    let obj = await obtemTodasVendasCompras()
-    setVendas(obj);
+    let objVen = await obtemTodasVendasCompras();
+
+    setVendas(objVen);
   }
   useEffect(() => {
     console.log("executando useffect");
@@ -56,10 +62,10 @@ export default function Tela1({ navigation }) {
     ]);
   }
 
-  async function apagaVendasCompras(){
-    await excluiTodasCompras()
-    await excluiTodasVendas()
-    carregaDados()
+  async function apagaVendasCompras() {
+    await excluiTodasCompras();
+    await excluiTodasVendas();
+    carregaDados();
   }
 
   return (
@@ -78,22 +84,29 @@ export default function Tela1({ navigation }) {
         </View>
         <View style={styles.areaBotoes}>
           {vendas.map((venda, index) => (
-            <List_Vendas
-              venda={venda}
-              index={index}
-              remover={removerElemento}
-              editar={editar} />
-              
+            <>
+              <List_Vendas
+                venda={venda}
+                index={index}
+                remover={removerElemento}
+                editar={editar}
+              />
+              {vendas.map((venda, index) => (
+                <List_ProdutosVendas
+                  venda={venda}
+                  index={index}
+                ></List_ProdutosVendas>
+              ))}
+            </>
           ))}
         </View>
 
-
         <TouchableOpacity
-        style={styles.botaoPequeno}
-        onPress={() => apagaVendasCompras()}
-      >
-        <Text style={styles.labelBnt}>Apaga tudo</Text>
-      </TouchableOpacity>
+          style={styles.botaoPequeno}
+          onPress={() => apagaVendasCompras()}
+        >
+          <Text style={styles.labelBnt}>Apaga tudo</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
