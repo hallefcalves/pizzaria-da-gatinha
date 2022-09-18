@@ -19,7 +19,7 @@ export default function List_ProdutosVendas({venda}) {
             <Text style={styles.label} >Preço Unitário: R${venda.unit}</Text>
             </View>
             <View style={{flexDirection: 'row', }}>
-            <Text style={styles.label} >Quantidade: {venda.quantidade} unidades</Text>
+            <Text style={styles.label} >Quantidade: {venda.quantidade} unidade(s)</Text>
             </View>
             </View>
    );
