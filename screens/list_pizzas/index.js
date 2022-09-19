@@ -21,21 +21,10 @@ import List_Produtos from "../../componentes/produtos/index";
 import { excluiProduto, obtemTodosProdutos } from "../../services/dbpro";
 
 export default function Tela1({ navigation }) {
-  const [descricao, setDescricao] = useState("");
-  const [codigo, setCodigo] = useState("");
-  const [codigoCat, setCodigoCat] = useState("");
-  const [preco, setPreco] = useState("");
   const [produtos, setProdutos] = useState([]);
 
   function editar(identificador) {
     const produto = produtos.find(produto => produto.codigo == identificador);
-
-    if (produto != undefined) {
-      setCodigo(produto.codigo);
-      setDescricao(produto.descricao);
-      setPreco(produto.preco);
-      setCodigoCat(produto.codigoCat)
-    }
 
     navigation.navigate("crud_produtos", {produto: produto})
   }

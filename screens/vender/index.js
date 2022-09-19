@@ -34,7 +34,6 @@ export default function Tela1({ navigation }) {
   const [proOpen, proSetOpen] = useState(false);
   const [proValue, proSetValue] = useState(null);
   const [proItems, proSetItems] = useState(pro);
-  const [totalPrice, setTotalPrice] = useState("");
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
   }
@@ -42,7 +41,8 @@ export default function Tela1({ navigation }) {
   async function processamentoUseEffect() {
     
     let obj = await obtemTodasCategorias();
-    for(i=0;i<obj.length;i++){
+    console.log(obj)
+    for(let i=0;i<obj.length;i++){
         cat.push({
             label: obj[i].descricao,
             value: obj[i].codigo
@@ -58,7 +58,7 @@ export default function Tela1({ navigation }) {
 
   async function getPizza(codigo){
     let obj = await obtemProdutosCategoria(codigo);
-    for(i=0;i<obj.length;i++){
+    for(let i=0;i<obj.length;i++){
         pro.push({
             label: obj[i].descricao,
             value: obj[i].codigo

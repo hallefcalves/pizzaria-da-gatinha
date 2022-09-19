@@ -21,9 +21,10 @@ export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState(undefined);
   const [preco, setPreco] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [codigoCat, setCodigoCat] = useState("");
+  const [codigoCat, setCodigoCat] = useState(null);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(codigoCat);
+  const [label, setLabel] = useState("")
   const [items, setItems] = useState(cat);
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
@@ -37,15 +38,16 @@ export default function Tela1({ navigation }) {
       });
     }
 
+    setItems(cat);
+    
     if (navigation.getParam("produto", undefined) != undefined) {
       let object = navigation.getParam("produto");
       setCodigo(object.codigo);
       setDescricao(object.descricao);
       setPreco(object.preco);
       setCodigoCat(object.codigoCat);
-      setValue
+      setValue(codigoCat);
     }
-    setItems(cat);
   }
 
   useEffect(() => {
@@ -120,15 +122,17 @@ export default function Tela1({ navigation }) {
           <Text style={styles.label}>Categoria</Text>
           <DropDownPicker
             listMode="SCROLLVIEW"
-            defaultValue={codigoCat}
             style={styles.caixadropdown}
             open={open}
             value={value}
             items={items}
+            placeholder={"Selecione uma categoria"}
             onChangeValue={(texto) => setCodigoCat(texto)}
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
+            onValueChange={(value) => console.log(value)}
+          
           />
 
           <View

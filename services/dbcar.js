@@ -55,31 +55,6 @@ export function adicionaCarrinho(carrinho) {
   });
 }
 
-export function alteraCarrinho(carrinho) {
-  console.log("começando o método alteraCarrinho");
-  return new Promise((resolve, reject) => {
-    let query =
-      "update tbCarrinho set quantidade=? where codigo=?";
-    let dbCx = getDbConnection();
-
-    dbCx.transaction(
-      (tx) => {
-        tx.executeSql(
-          query,
-          [carrinho.quantidade, carrinho.codigo],
-          (tx, resultado) => {
-            resolve(resultado.rowsAffected > 0);
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-        resolve(false);
-      }
-    );
-  });
-}
-
 export function excluiCarrinho(codigo) {
   console.log("Apagando carrinho " + codigo);
   return new Promise((resolve, reject) => {

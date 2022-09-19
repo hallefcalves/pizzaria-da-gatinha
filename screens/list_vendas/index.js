@@ -94,10 +94,9 @@ export default function Tela1({ navigation }) {
         </View>
         <View style={styles.areaBotoes}>
           {vendas.map((venda, index) => (
-            
             <List_Vendas
               venda={venda}
-              index={index}
+              key={index}
               compras={compras}
               removerElemento={removerElemento}
             />
