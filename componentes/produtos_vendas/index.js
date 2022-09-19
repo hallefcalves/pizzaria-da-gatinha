@@ -12,8 +12,9 @@ import IconePizza from "../../assets/img/pizza.png";
 export default function List_ProdutosVendas({compra}) {
 
    return (
-    <View style={{ alignItems: 'center',justifyContent: 'center', marginBottom: 30}} >
+    <View style={{ alignItems: 'center',justifyContent: 'center'}} >
             <View style={{flexDirection: 'row', }}>
+            <Image source={IconePizza} style={styles.icone} />
             <Text style={styles.label} > Nome: {compra.descricao} </Text>
             </View>
             <View style={{flexDirection: 'row', }}>

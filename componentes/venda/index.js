@@ -16,11 +16,11 @@ export default function List_Vendas({
   console.log(venda)
   console.log(compras)
   return (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+    <View style={{alignItems: 'center', justifyContent: 'center',}}>
+    <View style={styles.venda}>
+      <View style={{ flexDirection: "row", marginTop: 5}}>
         <Image source={IconePizza} style={styles.icone} />
         <Text style={styles.label}>{venda.codigo} </Text>
-
         <TouchableOpacity onPress={() => removerElemento(venda.codigo)}>
           <Ionicons name="md-remove-circle" size={32} color="#92c8d1" />
         </TouchableOpacity>
@@ -38,6 +38,7 @@ export default function List_Vendas({
           <Text></Text>
         );
       })}
+    </View>
     </View>
   );
 }

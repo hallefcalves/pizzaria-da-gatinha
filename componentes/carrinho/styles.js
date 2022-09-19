@@ -14,6 +14,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height:650
   },
+  
+  carrinho: {
+  
+    width: '90%',     
+    borderRadius: 10,
+    borderColor: '#ffff',
+    borderWidth: 2,
+    marginBottom: 15,
+    alignItems: "center", 
+    justifyContent: "center", 
+  },
 
   label: {
     fontSize: 20,

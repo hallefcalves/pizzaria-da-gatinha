@@ -8,6 +8,7 @@ import IconePizza from "../../assets/img/pizza.png";
 export default function List_Produtos({ produto, removerElemento, editar }) {
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <View style={styles.produtos}>
       <View style={{ flexDirection: "row" }}>
         <Image source={IconePizza} style={styles.icone} />
         <Text style={styles.label}>{produto.categoria} </Text>
@@ -23,10 +24,11 @@ export default function List_Produtos({ produto, removerElemento, editar }) {
           <Entypo name="edit" size={32} color="#d6a6b0" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.label}>Valor: R$ {produto.preco},00{'\n'} </Text>
+      <Text style={styles.label}>Valor: R$ {produto.preco}{'\n'} </Text>
 
       <View style={{ flexDirection: "row" }}>
         
+      </View>
       </View>
     </View>
   );

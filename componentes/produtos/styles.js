@@ -15,6 +15,17 @@ const styles = StyleSheet.create({
     height:650
   },
 
+  produtos: {
+  
+    width: '90%',     
+    borderRadius: 10,
+    borderColor: '#ffff',
+    borderWidth: 2,
+    marginBottom: 15,
+    alignItems: "center", 
+    justifyContent: "center", 
+  },
+
   label: {
     fontSize: 20,
     color: "#ffff",
