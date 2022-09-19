@@ -156,7 +156,7 @@ export default function Tela1({ navigation }) {
           {carrinhos.map((carrinho, index) => (
             <List_Carrinho
               carrinho={carrinho}
-              index={index}
+              key={index}
               removerElemento={removerElemento}
               editar={editar}
             />
