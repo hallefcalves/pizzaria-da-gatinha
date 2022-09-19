@@ -94,7 +94,7 @@ export default function Tela1({ navigation }) {
         <View style={styles.areaBotoes}>
           {categorias.map((categoria, index) => (
             <List_categorias
-              index={index}
+              key={index}
               categoria={categoria}
               removerElemento={removerElemento}
               editar={editar}

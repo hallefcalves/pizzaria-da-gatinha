@@ -76,7 +76,7 @@ export default function Tela1({ navigation }) {
           {produtos.map((produto, index) => (
             <List_Produtos
               produto={produto}
-              index={index}
+              key={index}
               removerElemento={removerElemento}
               editar={editar}
             />
