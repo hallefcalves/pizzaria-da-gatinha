@@ -23,6 +23,7 @@ import {
   excluiTodasCompras,
   excluiCompraVenda,
   obtemTodasCompras,
+  obtemTodasComprasProduto,
 } from "../../services/dbcom";
 import List_ProdutosVendas from "../../componentes/produtos_vendas";
 
@@ -34,10 +35,10 @@ export default function Tela1({ navigation }) {
   const [compras, setCompras] = useState([]);
 
   async function carregaDados() {
-    let objVen = await obtemTodasVendasCompras();
-    console.log(objVen)
-    let objCom = await obtemTodasCompras();
+    let objVen = await obtemTodasVendas();
+    let objCom = await obtemTodasComprasProduto();
     setVendas(objVen);
+    setCompras(objCom);
   }
   useEffect(() => {
     carregaDados(); //necessário método pois aqui não pode utilizar await...
@@ -93,9 +94,11 @@ export default function Tela1({ navigation }) {
         </View>
         <View style={styles.areaBotoes}>
           {vendas.map((venda, index) => (
+            
             <List_Vendas
               venda={venda}
               index={index}
+              compras={compras}
               removerElemento={removerElemento}
             />
           ))}

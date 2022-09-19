@@ -23,7 +23,6 @@ export default function Tela1({ navigation }) {
   const [label,  setLabel] = useState("Adicionar Categoria")
 
   async function processamentoUseEffect() {
-    console.log("UseEffect...");
     if (navigation.getParam("categoria", undefined) != undefined) {
       let object = navigation.getParam("categoria");
       setCodigo(object.codigo);
@@ -33,7 +32,6 @@ export default function Tela1({ navigation }) {
   }
 
   useEffect(() => {
-    console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
 
@@ -48,8 +46,6 @@ export default function Tela1({ navigation }) {
       codigo: novoRegistro ? createUniqueId() : codigo,
       descricao: descricao,
     };
-
-    console.log(obj.codigo);
     try {
       if (novoRegistro) {
         let resposta = await adicionaCategoria(obj);

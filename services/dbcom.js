@@ -57,6 +57,35 @@ export function obtemTodasCompras() {
   });
 }
 
+export function obtemTodasComprasProduto() {
+  return new Promise((resolve, reject) => {
+    let dbCx = getDbConnection();
+    dbCx.transaction(
+      (tx) => {
+        let query = "select * from tbCompras c inner join tbProdutos p on c.codigoPro = p.codigo";
+        tx.executeSql(query, [], (tx, registros) => {
+          var retorno = [];
+
+          for (let n = 0; n < registros.rows.length; n++) {
+            let obj = {
+              codigo: registros.rows.item(n).codigo,
+              codigoVen: registros.rows.item(n).codigoVen,
+              quantidade: registros.rows.item(n).quantidade,
+              descricao: registros.rows.item(n).descricao,
+              unit: registros.rows.item(n).preco
+            };
+            retorno.push(obj);
+          }
+          resolve(retorno);
+        });
+      },
+      (error) => {
+        console.log(error);
+        resolve([]);
+      }
+    );
+  });
+}
 export function adicionaCompra(compra) {
   return new Promise((resolve, reject) => {
     let query =

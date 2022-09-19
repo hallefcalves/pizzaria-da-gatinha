@@ -9,17 +9,18 @@ import IconePizza from "../../assets/img/pizza.png";
 
 
 
-export default function List_ProdutosVendas({venda}) {
+export default function List_ProdutosVendas({compra}) {
+
    return (
     <View style={{ alignItems: 'center',justifyContent: 'center', marginBottom: 30}} >
             <View style={{flexDirection: 'row', }}>
-            <Text style={styles.label} > Nome: {venda.descricao} </Text>
+            <Text style={styles.label} > Nome: {compra.descricao} </Text>
             </View>
             <View style={{flexDirection: 'row', }}>
-            <Text style={styles.label} >Preço Unitário: R${venda.unit}</Text>
+            <Text style={styles.label} >Preço Unitário: R${compra.unit}</Text>
             </View>
             <View style={{flexDirection: 'row', }}>
-            <Text style={styles.label} >Quantidade: {venda.quantidade} unidade(s)</Text>
+            <Text style={styles.label} >Quantidade: {compra.quantidade} unidade(s)</Text>
             </View>
             </View>
    );

@@ -45,12 +45,10 @@ export default function Tela1({ navigation }) {
       setCodigoCat(object.codigoCat);
       setValue
     }
-    console.log("UseEffect...");
     setItems(cat);
   }
 
   useEffect(() => {
-    console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
   async function limparCampos() {
@@ -68,10 +66,6 @@ export default function Tela1({ navigation }) {
       preco: preco,
       codigoCat: codigoCat,
     };
-
-    console.log(obj.codigoCat);
-
-    console.log(obj.codigo);
     try {
       if (novoRegistro) {
         let resposta = await adicionaProduto(obj);

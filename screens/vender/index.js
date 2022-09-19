@@ -83,9 +83,6 @@ export default function Tela1({ navigation }) {
       quantidade: quantidade
     };
 
-    console.log(obj.codigoPro)
-
-    console.log(obj.codigo);
     try {
       if (novoRegistro) {
         let resposta = await adicionaCarrinho(obj);

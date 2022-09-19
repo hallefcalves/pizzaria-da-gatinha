@@ -37,9 +37,6 @@ export default function Tela1({ navigation }) {
       setCodigoCat(produto.codigoCat)
     }
 
-
-    console.log(produto);
-
     navigation.navigate("crud_produtos", {produto: produto})
   }
 
@@ -66,12 +63,10 @@ export default function Tela1({ navigation }) {
   async function processamentoUseEffect() {
     let obj = await obtemTodosProdutos();
 
-    console.log("UseEffect...");
     setProdutos(obj);
   }
 
   useEffect(() => {
-    console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
   return (

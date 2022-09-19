@@ -49,7 +49,6 @@ export default function Tela1({ navigation }) {
   }
 
   function getTotalPrice(obj) {
-    console.log("rodou");
     let value = 0;
     for (let i = 0; i < obj.length; i++) {
       let element =
@@ -61,7 +60,6 @@ export default function Tela1({ navigation }) {
   }
 
   useEffect(() => {
-    console.log("executando useffect");
     carregaDados(); //necessário método pois aqui não pode utilizar await...
   }, []);
 
@@ -76,7 +74,6 @@ export default function Tela1({ navigation }) {
       setDescricao(carrinho.data);
     }
 
-    console.log(carrinho);
     carregaDados();
   }
 
@@ -109,12 +106,9 @@ export default function Tela1({ navigation }) {
       date: medium,
       preco: totalPrice,
     };
-    console.log(codPro[0])
 
     try {
-      console.log(objVen);
       let resposta = await adicionaVenda(objVen);
-      console.log(codPro[0])
       if (resposta) {
         for (i = 0; i < carrinhos.length; i++) {
 
@@ -124,8 +118,6 @@ export default function Tela1({ navigation }) {
             quantidade: quant[i],
             codigoPro: codPro[i],
           };
-          console.log(codPro[0])
-          console.log(objCom);
           resposta = await adicionaCompra(objCom);
         }
         if (resposta) {

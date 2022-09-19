@@ -29,15 +29,12 @@ export default function Tela1({ navigation }) {
 
   async function processamentoUseEffect() {
     let obj = await obtemTodasCategorias();
-    console.log(obj)
 
     setCategorias(obj);
 
-    console.log("UseEffect...");
   }
 
   useEffect(() => {
-    console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
 
@@ -51,13 +48,11 @@ export default function Tela1({ navigation }) {
       setDescricao(categoria.descricao);
     }
 
-    console.log(categoria);
     navigation.navigate("crud_categorias", { categoria: categoria });
   }
 
   async function removerElemento(identificador) {
     let obj = await obtemProdutosCategoria(identificador);
-    console.log(obj);
     if (obj.length === 0) {
       Alert.alert("Atenção", "Confirma a remoção do categoria?", [
         {

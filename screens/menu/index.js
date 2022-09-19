@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert
 } from "react-native";
 import { useState, useEffect } from "react";
 import styles from "./styles";
@@ -20,21 +21,17 @@ export default function Tela1({ navigation }) {
 
   async function processamentoUseEffect() {
     if (!tabelasCriadas) {
-      console.log("Verificando necessidade de criar tabelas...");
       tabelasCriadas = true;
       try {
         await createTable();  
       } catch (error) {
-        console.log(error)
+        Alert.alert(error.toString())
       }
       
     }
-
-    console.log("UseEffect...");
   }
 
   useEffect(() => {
-    console.log("executando useffect");
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
   return (

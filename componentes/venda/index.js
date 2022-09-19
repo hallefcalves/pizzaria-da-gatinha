@@ -7,7 +7,14 @@ import IconePizza from "../../assets/img/pizza.png";
 import List_Produtos from "../produtos/index";
 import List_ProdutosVendas from "../produtos_vendas/index";
 
-export default function List_Vendas({ venda, removerElemento, index }) {
+export default function List_Vendas({
+  venda,
+  compras,
+  removerElemento,
+}) {
+  let code = venda.codigo;
+  console.log(venda)
+  console.log(compras)
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
       <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
@@ -20,8 +27,17 @@ export default function List_Vendas({ venda, removerElemento, index }) {
       </View>
       <Text style={styles.label}>{venda.date} </Text>
       <Text style={styles.label}>Valor total: R${venda.full} </Text>
-      <Text style={styles.label}>Produtos:</Text>
-        <List_ProdutosVendas venda={venda} index={index}></List_ProdutosVendas>
+      <Text style={styles.label}>Produtos: </Text>
+      {compras.map((compra, index) => {
+        return compra.codigoVen === code ? (
+          <List_ProdutosVendas
+            compra={compra}
+            index={index}
+          ></List_ProdutosVendas>
+        ) : (
+          <Text></Text>
+        );
+      })}
     </View>
   );
 }
