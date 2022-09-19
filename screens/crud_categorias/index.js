@@ -18,16 +18,15 @@ import { adicionaCategoria, alteraCategoria } from "../../services/dbcat";
 
 export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState(undefined);
-  const [categoria, setCategoria] = useState();
   const [descricao, setDescricao] = useState("");
-  const [label,  setLabel] = useState("Adicionar Categoria")
+  const [label, setLabel] = useState("Adicionar Categoria");
 
   async function processamentoUseEffect() {
     if (navigation.getParam("categoria", undefined) != undefined) {
       let object = navigation.getParam("categoria");
       setCodigo(object.codigo);
       setDescricao(object.descricao);
-      setLabel("Atualizar Categoria")
+      setLabel("Atualizar Categoria");
     }
   }
 
@@ -41,26 +40,31 @@ export default function Tela1({ navigation }) {
 
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
+    if (descricao.length < 1) {
+      Alert.alert("PREENCHA OS CAMPOS");
+    } else {
+      let obj = {
+        codigo: novoRegistro ? createUniqueId() : codigo,
+        descricao: descricao,
+      };
+      try {
+        if (novoRegistro) {
+          let resposta = await adicionaCategoria(obj);
 
-    let obj = {
-      codigo: novoRegistro ? createUniqueId() : codigo,
-      descricao: descricao,
-    };
-    try {
-      if (novoRegistro) {
-        let resposta = await adicionaCategoria(obj);
-
-        if (resposta)
-          Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
-        else Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
-      } else {
-        let resposta = await alteraCategoria(obj);
-        if (resposta)
-          Alert.alert("Alerta", "Alterado com sucesso!", ["Ok", "Cancel"]);
-        else Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+          if (resposta)
+            Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
+          else
+            Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        } else {
+          let resposta = await alteraCategoria(obj);
+          if (resposta)
+            Alert.alert("Alerta", "Alterado com sucesso!", ["Ok", "Cancel"]);
+          else
+            Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        }
+      } catch (e) {
+        Alert.alert(e.message);
       }
-    } catch (e) {
-      Alert.alert(e.message);
     }
   }
 

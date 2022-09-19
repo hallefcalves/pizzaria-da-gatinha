@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -17,14 +17,13 @@ import IconeCarrinho from "../../assets/img/shopping_cart_icon.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
 import { obtemTodasCategorias } from "../../services/dbcat";
-import { obtemProdutosCategoria, obtemUmProduto } from "../../services/dbpro"
+import { obtemProdutosCategoria, obtemUmProduto } from "../../services/dbpro";
 import { adicionaCarrinho } from "../../services/dbcar";
 
 export default function Tela1({ navigation }) {
-  
-  var cat = []
-  var pro = []
-  const [codigo, setCodigo] = useState(undefined)
+  var cat = [];
+  var pro = [];
+  const [codigo, setCodigo] = useState(undefined);
   const [price, setPrice] = useState("");
   const [codigoPro, setCodigoPro] = useState("");
   const [quantidade, setQuantidade] = useState("");
@@ -39,69 +38,71 @@ export default function Tela1({ navigation }) {
   }
 
   async function processamentoUseEffect() {
-    
     let obj = await obtemTodasCategorias();
-    console.log(obj)
-    for(let i=0;i<obj.length;i++){
-        cat.push({
-            label: obj[i].descricao,
-            value: obj[i].codigo
-        });
+    console.log(obj);
+    for (let i = 0; i < obj.length; i++) {
+      cat.push({
+        label: obj[i].descricao,
+        value: obj[i].codigo,
+      });
     }
-    
-    catSetItems(cat)
+
+    catSetItems(cat);
   }
-  
+
   useEffect(() => {
     processamentoUseEffect(); //necessário método pois aqui não pode utilizar await...
   }, []);
 
-  async function getPizza(codigo){
+  async function getPizza(codigo) {
     let obj = await obtemProdutosCategoria(codigo);
-    for(let i=0;i<obj.length;i++){
-        pro.push({
-            label: obj[i].descricao,
-            value: obj[i].codigo
-        });
+    for (let i = 0; i < obj.length; i++) {
+      pro.push({
+        label: obj[i].descricao,
+        value: obj[i].codigo,
+      });
     }
-    
-    proSetItems(pro)
-  } 
 
-  async function getPrice(codigoPro){
+    proSetItems(pro);
+  }
+
+  async function getPrice(codigoPro) {
     let obj = await obtemUmProduto(codigoPro.value);
-    setPrice("R$ " + obj[0].preco + ",00")
-    setCodigoPro(codigoPro.value)
+    setPrice("R$ " + obj[0].preco + ",00");
+    setCodigoPro(codigoPro.value);
   }
 
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
+    if (quantidade < 1) {
+      Alert.alert("PREENCHA OS CAMPOS");
+    } else {
+      let obj = {
+        codigo: novoRegistro ? createUniqueId() : codigo,
+        codigoPro: codigoPro,
+        quantidade: quantidade,
+      };
 
-    let obj = {
-      codigo: novoRegistro ? createUniqueId() : codigo,
-      codigoPro: codigoPro,
-      quantidade: quantidade
-    };
+      try {
+        if (novoRegistro) {
+          let resposta = await adicionaCarrinho(obj);
 
-    try {
-      if (novoRegistro) {
-        let resposta = await adicionaCarrinho(obj);
+          if (resposta)
+            Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
+          else
+            Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        } else {
+          let resposta = await alteraCarrinho(obj);
+          if (resposta)
+            Alert.alert("Alerta", "Alterado com sucesso!", ["Ok", "Cancel"]);
+          else
+            Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        }
 
-        if (resposta) 
-            Alert.alert("Alerta","adicionado com sucesso!",["Ok", "Cancel"]);
-        else 
-            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]); 
-      } else {
-        let resposta = await alteraCarrinho(obj);
-        if (resposta) 
-            Alert.alert("Alerta","Alterado com sucesso!",["Ok", "Cancel"]);
-        else 
-            Alert.alert("Alerta","Falhou miseravelmente!",["Ok", "Cancel"]);
+        Keyboard.dismiss();
+      } catch (e) {
+        Alert.alert(e.toString());
       }
-
-      Keyboard.dismiss();
-    } catch (e) {
-      Alert.alert(e.toString());
     }
   }
 
@@ -135,7 +136,7 @@ export default function Tela1({ navigation }) {
             open={catOpen}
             value={catValue}
             items={catItems}
-            onChangeValue={(texto)=> getPizza(texto)}
+            onChangeValue={(texto) => getPizza(texto)}
             setOpen={catSetOpen}
             setValue={catSetValue}
             setItems={catSetItems}

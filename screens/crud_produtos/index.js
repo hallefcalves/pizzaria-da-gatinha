@@ -24,7 +24,7 @@ export default function Tela1({ navigation }) {
   const [codigoCat, setCodigoCat] = useState(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(codigoCat);
-  const [label, setLabel] = useState("")
+  const [label, setLabel] = useState("");
   const [items, setItems] = useState(cat);
   function createUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(0, 2);
@@ -39,7 +39,7 @@ export default function Tela1({ navigation }) {
     }
 
     setItems(cat);
-    
+
     if (navigation.getParam("produto", undefined) != undefined) {
       let object = navigation.getParam("produto");
       setCodigo(object.codigo);
@@ -61,31 +61,36 @@ export default function Tela1({ navigation }) {
 
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
+    if (descricao.length< 1 || preco < 1) {
+      Alert.alert("PREENCHA OS CAMPOS");
+    } else {
+      let obj = {
+        codigo: novoRegistro ? createUniqueId() : codigo,
+        descricao: descricao,
+        preco: preco,
+        codigoCat: codigoCat,
+      };
+      try {
+        if (novoRegistro) {
+          let resposta = await adicionaProduto(obj);
 
-    let obj = {
-      codigo: novoRegistro ? createUniqueId() : codigo,
-      descricao: descricao,
-      preco: preco,
-      codigoCat: codigoCat,
-    };
-    try {
-      if (novoRegistro) {
-        let resposta = await adicionaProduto(obj);
+          if (resposta)
+            Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
+          else
+            Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        } else {
+          let resposta = await alteraProduto(obj);
+          if (resposta)
+            Alert.alert("Alerta", "Alterado com sucesso!", ["Ok", "Cancel"]);
+          else
+            Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        }
 
-        if (resposta)
-          Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
-        else Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
-      } else {
-        let resposta = await alteraProduto(obj);
-        if (resposta)
-          Alert.alert("Alerta", "Alterado com sucesso!", ["Ok", "Cancel"]);
-        else Alert.alert("Alerta", "Falhou miseravelmente!", ["Ok", "Cancel"]);
+        Keyboard.dismiss();
+        limparCampos();
+      } catch (e) {
+        Alert.alert(e);
       }
-
-      Keyboard.dismiss();
-      limparCampos();
-    } catch (e) {
-      Alert.alert(e);
     }
   }
 
@@ -132,7 +137,6 @@ export default function Tela1({ navigation }) {
             setValue={setValue}
             setItems={setItems}
             onValueChange={(value) => console.log(value)}
-          
           />
 
           <View
