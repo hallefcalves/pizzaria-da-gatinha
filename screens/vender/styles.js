@@ -96,10 +96,7 @@ const styles = StyleSheet.create({
     height: 230,
   },
 
-  imageicon: {
-    width: 230,
-    height: 230,
-  },
+
 });
 
 export default styles;
