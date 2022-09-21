@@ -14,7 +14,11 @@ import { useState, useEffect } from "react";
 import IconeGatinho from "../../assets/img/chef-2-cats-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, MD3Colors } from "react-native-paper";
-import { adicionaCategoria, alteraCategoria } from "../../services/dbcat";
+import {
+  adicionaCategoria,
+  alteraCategoria,
+  obtemTodasCategorias,
+} from "../../services/dbcat";
 
 export default function Tela1({ navigation }) {
   const [codigo, setCodigo] = useState(undefined);
@@ -47,6 +51,13 @@ export default function Tela1({ navigation }) {
         codigo: novoRegistro ? createUniqueId() : codigo,
         descricao: descricao,
       };
+      let objCom = await obtemTodasCategorias();
+      for (i = 0; i < objCom.length; i++) {
+        if (objCom[i].descricao.trim() === obj.descricao.trim()) {
+          Alert.alert("Alerta", "Categoria já existe");
+          return;
+        }
+      }
       try {
         if (novoRegistro) {
           let resposta = await adicionaCategoria(obj);
