@@ -11,7 +11,11 @@ import {
 import styles from "./styles";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useState, useEffect } from "react";
-import { adicionaProduto, alteraProduto, obtemTodosProdutos } from "../../services/dbpro";
+import {
+  adicionaProduto,
+  alteraProduto,
+  obtemTodosProdutos,
+} from "../../services/dbpro";
 import { obtemTodasCategorias } from "../../services/dbcat";
 import IconeGatinho from "../../assets/img/chef-cat-modified.png";
 import { ScrollView } from "react-native-gesture-handler";
@@ -61,27 +65,26 @@ export default function Tela1({ navigation }) {
 
   async function salvaDados() {
     let novoRegistro = codigo == undefined;
-    if (descricao.length< 1 || preco < 1) {
+    if (descricao.length < 1 || preco < 1) {
       Alert.alert("PREENCHA OS CAMPOS");
     } else {
-      
       let obj = {
         codigo: novoRegistro ? createUniqueId() : codigo,
         descricao: descricao,
         preco: preco,
         codigoCat: codigoCat,
       };
-      let objPro = await obtemTodosProdutos();
-      for (i = 0; i < objPro.length; i++) {
-        if (objPro[i].descricao.trim() === obj.descricao.trim()) {
-          Alert.alert("Alerta", "Produto já existe");
-          return;
-        }
-      }
       try {
         if (novoRegistro) {
           let resposta = await adicionaProduto(obj);
 
+          let objPro = await obtemTodosProdutos();
+          for (i = 0; i < objPro.length; i++) {
+            if (objPro[i].descricao.trim() === obj.descricao.trim()) {
+              Alert.alert("Alerta", "Produto já existe");
+              return;
+            }
+          }
           if (resposta)
             Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
           else
