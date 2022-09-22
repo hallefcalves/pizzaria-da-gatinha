@@ -76,15 +76,9 @@ export default function Tela1({ navigation }) {
       };
       try {
         if (novoRegistro) {
+
           let resposta = await adicionaProduto(obj);
 
-          let objPro = await obtemTodosProdutos();
-          for (i = 0; i < objPro.length; i++) {
-            if (objPro[i].descricao.trim() === obj.descricao.trim()) {
-              Alert.alert("Alerta", "Produto já existe");
-              return;
-            }
-          }
           if (resposta)
             Alert.alert("Alerta", "adicionado com sucesso!", ["Ok", "Cancel"]);
           else
