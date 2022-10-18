@@ -12,7 +12,7 @@
     "@react-native-async-storage/async-storage": "^1.15.0",
     "date-fns": "^2.29.3",
     "eas": "^0.1.0",
-    "expo": "~46.0.9",
+    "expo": "~46.0.13",
     "expo-sqlite": "~10.3.0",
     "expo-status-bar": "~1.4.0",
     "moment": "^2.29.4",
