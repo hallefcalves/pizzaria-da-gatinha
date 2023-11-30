@@ -12,13 +12,13 @@
     "@react-native-async-storage/async-storage": "^1.15.0",
     "date-fns": "^2.29.3",
     "eas": "^0.1.0",
-    "expo": "~46.0.9",
+    "expo": "~48.0.1",
     "expo-sqlite": "~10.3.0",
     "expo-status-bar": "~1.4.0",
     "moment": "^2.29.4",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-native": "0.69.5",
+    "react-native": "0.72.0",
     "react-native-dropdown-picker": "^5.4.2",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-paper": "^4.12.4",
@@ -26,7 +26,7 @@
     "react-native-table-component": "^1.2.2",
     "react-native-web": "~0.18.7",
     "react-navigation": "^4.4.4",
-    "expo-updates": "~0.14.5"
+    "expo-updates": "~0.18.8"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
